@@ -26,28 +26,53 @@ export interface SanityArticle {
   slug: { current: string };
   publishedAt: string;
   mainImage: any;
-  category: string;
+  topic: string;
+  tags: string[];
+  postType: 'article' | 'update';
   readTime: string;
 }
 
-// Helper fetch function
-export async function getLatestArticles(): Promise<SanityArticle[]> {
+// Helper fetch functions
+export async function getFeaturedArticles(): Promise<SanityArticle[]> {
   try {
-    // This GROQ query fetches the 3 most recent posts, including their category name
-    const query = `*[_type == "post"] | order(publishedAt desc)[0...3] {
+    const query = `*[_type == "post" && postType == "article"] | order(publishedAt desc)[0...3] {
       _id,
       title,
       slug,
       publishedAt,
       mainImage,
-      "category": categories[0]->title,
+      postType,
+      "topic": topic->title,
+      "tags": tags[]->title,
       "readTime": round(length(pt::text(body)) / 5 / 180 ) + " min read"
     }`;
     
     const articles = await sanityClient.fetch(query);
     return articles;
   } catch (error) {
-    console.error("Error fetching from Sanity:", error);
+    console.error("Error fetching articles from Sanity:", error);
+    return [];
+  }
+}
+
+export async function getLatestUpdates(): Promise<SanityArticle[]> {
+  try {
+    const query = `*[_type == "post" && postType == "update"] | order(publishedAt desc)[0...3] {
+      _id,
+      title,
+      slug,
+      publishedAt,
+      mainImage,
+      postType,
+      "topic": topic->title,
+      "tags": tags[]->title,
+      "readTime": round(length(pt::text(body)) / 5 / 180 ) + " min read"
+    }`;
+    
+    const updates = await sanityClient.fetch(query);
+    return updates;
+  } catch (error) {
+    console.error("Error fetching updates from Sanity:", error);
     return [];
   }
 }
@@ -61,10 +86,12 @@ export async function getArticleBySlug(slug: string): Promise<any> {
       mainImage,
       body,
       markdownText,
+      postType,
       "markdownUrl": markdownFile.asset->url,
       "authorName": author->name,
       "authorImage": author->image,
-      "category": categories[0]->title,
+      "topic": topic->title,
+      "tags": tags[]->title,
       "readTime": round(length(pt::text(body)) / 5 / 180 ) + " min read"
     }`;
     

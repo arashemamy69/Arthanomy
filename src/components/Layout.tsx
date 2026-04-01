@@ -28,14 +28,14 @@ function Navbar() {
           </div>
           <span className="text-2xl font-serif font-bold tracking-tight">Arthanomy</span>
         </Link>
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium">
+        <div className="hidden md:flex items-center gap-8 text-base font-medium">
           <Link to="/" className={`${theme.textHover} transition-colors`}>Articles</Link>
           <Link to="/" className={`${theme.textHover} transition-colors`}>Portfolios</Link>
           <Link to="/" className={`${theme.textHover} transition-colors`}>Markets</Link>
           <Link to="/" className={`${theme.textHover} transition-colors`}>About</Link>
         </div>
         <div className="hidden md:flex items-center gap-4">
-          <button className="bg-[#1a1a1a] text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-black transition-colors">
+          <button className="bg-[#1a1a1a] text-white px-5 py-2.5 rounded-full text-base font-medium hover:bg-black transition-colors">
             Subscribe
           </button>
         </div>

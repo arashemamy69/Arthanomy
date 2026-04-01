@@ -4,7 +4,7 @@ import { ArrowRight, TrendingUp, PieChart, Briefcase, Coins, Scale } from 'lucid
 import { AreaChart, Area, ResponsiveContainer, YAxis } from 'recharts';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../ThemeContext';
-import { getLatestArticles, urlFor, SanityArticle } from '../lib/sanity';
+import { getFeaturedArticles, getLatestUpdates, urlFor, SanityArticle } from '../lib/sanity';
 
 const data = [
   { value: 4000 },
@@ -24,7 +24,8 @@ export default function HomePage() {
     <>
       <Hero />
       <SamplePortfolios />
-      <LatestArticles />
+      <LatestUpdates />
+      <FeaturedArticles />
       <Newsletter />
     </>
   );
@@ -82,9 +83,29 @@ function Hero() {
                     <stop offset="0%" stopColor={theme.chartStroke} />
                     <stop offset="100%" stopColor={theme.chartStroke} stopOpacity={0.5} />
                   </linearGradient>
-                  <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor={theme.chartStroke} stopOpacity={0.2}/>
-                    <stop offset="95%" stopColor={theme.chartStroke} stopOpacity={0}/>
+                  <linearGradient id="colorValueOcean" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#2563eb" stopOpacity={0.2}/>
+                    <stop offset="95%" stopColor="#2563eb" stopOpacity={0}/>
+                  </linearGradient>
+                  <linearGradient id="colorValueSunset" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#e11d48" stopOpacity={0.2}/>
+                    <stop offset="95%" stopColor="#e11d48" stopOpacity={0}/>
+                  </linearGradient>
+                  <linearGradient id="colorValueAmethyst" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.2}/>
+                    <stop offset="95%" stopColor="#4f46e5" stopOpacity={0}/>
+                  </linearGradient>
+                  <linearGradient id="colorValueEmerald" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#059669" stopOpacity={0.2}/>
+                    <stop offset="95%" stopColor="#059669" stopOpacity={0}/>
+                  </linearGradient>
+                  <linearGradient id="colorValueMonochrome" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#1e293b" stopOpacity={0.2}/>
+                    <stop offset="95%" stopColor="#1e293b" stopOpacity={0}/>
+                  </linearGradient>
+                  <linearGradient id="colorValueGold" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#E7AB8C" stopOpacity={0.2}/>
+                    <stop offset="95%" stopColor="#E7AB8C" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
                 <YAxis domain={['dataMin - 100', 'dataMax + 100']} hide />
@@ -171,14 +192,107 @@ function SamplePortfolios() {
   );
 }
 
-function LatestArticles() {
+function LatestUpdates() {
+  const { theme } = useTheme();
+  const [sanityUpdates, setSanityUpdates] = useState<SanityArticle[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchUpdates() {
+      const data = await getLatestUpdates();
+      setSanityUpdates(data);
+      setLoading(false);
+    }
+    fetchUpdates();
+  }, []);
+
+  const fallbackUpdates = [
+    {
+      slug: { current: 'dividend-yields' },
+      category: "Market Update",
+      title: "Why Dividend Yields Are Rising in 2026",
+      readTime: "5 min read",
+      image: "https://picsum.photos/seed/market/800/600"
+    },
+    {
+      slug: { current: 'interest-rates' },
+      category: "Economy",
+      title: "Bank of Canada Holds Rates Steady",
+      readTime: "4 min read",
+      image: "https://picsum.photos/seed/economy/800/600"
+    },
+    {
+      slug: { current: 'tech-stocks' },
+      category: "Equities",
+      title: "Tech Sector Earnings Beat Expectations",
+      readTime: "6 min read",
+      image: "https://picsum.photos/seed/tech/800/600"
+    }
+  ];
+
+  const displayUpdates = sanityUpdates.length > 0 ? sanityUpdates.map(a => ({
+    slug: a.slug,
+    category: a.topic || "Update",
+    title: a.title,
+    postType: a.postType || "update",
+    readTime: a.readTime || "5 min read",
+    image: a.mainImage ? urlFor(a.mainImage).width(800).height(600).url() : "https://picsum.photos/seed/market/800/600"
+  })) : fallbackUpdates;
+
+  return (
+    <section className="py-24 px-6 bg-gray-50 border-y border-black/5">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex justify-between items-end mb-12">
+          <div>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Latest Updates</h2>
+            <p className="text-lg text-gray-600">Timely market commentary and portfolio adjustments.</p>
+          </div>
+          <button className={`hidden md:flex items-center gap-2 font-medium ${theme.textHover} transition-colors`}>
+            View all updates <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+        
+        <div className="grid md:grid-cols-3 gap-8">
+          {displayUpdates.map((update, i) => (
+            <Link to={`/post/${update.slug?.current || ''}`} key={i}>
+              <motion.article 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="group cursor-pointer block bg-white p-6 rounded-3xl border border-black/5 hover:shadow-lg hover:shadow-black/5 transition-all"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <span className={`text-xs font-bold uppercase tracking-wider ${theme.textPrimary}`}>{update.category}</span>
+                  <span className="text-xs text-gray-400">•</span>
+                  <span className="text-xs text-gray-500 font-medium">{update.readTime}</span>
+                </div>
+                <h3 className={`text-xl font-bold leading-tight mb-4 ${theme.groupTextHover} transition-colors`}>
+                  {update.title}
+                </h3>
+                <div className={`flex items-center gap-2 text-sm font-medium ${theme.textPrimary} opacity-0 group-hover:opacity-100 transition-opacity`}>
+                  Read Update <ArrowRight className="w-4 h-4" />
+                </div>
+              </motion.article>
+            </Link>
+          ))}
+        </div>
+        <button className="md:hidden mt-8 w-full flex items-center justify-center gap-2 font-medium py-4 border border-black/10 rounded-full hover:bg-gray-50">
+          View all updates <ArrowRight className="w-4 h-4" />
+        </button>
+      </div>
+    </section>
+  );
+}
+
+function FeaturedArticles() {
   const { theme } = useTheme();
   const [sanityArticles, setSanityArticles] = useState<SanityArticle[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchArticles() {
-      const data = await getLatestArticles();
+      const data = await getFeaturedArticles();
       setSanityArticles(data);
       setLoading(false);
     }
@@ -201,29 +315,30 @@ function LatestArticles() {
       image: "https://picsum.photos/seed/realestate/800/600"
     },
     {
-      slug: { current: 'dividend-yields' },
-      category: "Market Update",
-      title: "Why Dividend Yields Are Rising in 2026",
-      readTime: "5 min read",
-      image: "https://picsum.photos/seed/market/800/600"
+      slug: { current: 'tax-advantaged-accounts' },
+      category: "Taxes",
+      title: "Maximizing Your TFSA and RRSP",
+      readTime: "10 min read",
+      image: "https://picsum.photos/seed/taxes/800/600"
     }
   ];
 
   const displayArticles = sanityArticles.length > 0 ? sanityArticles.map(a => ({
     slug: a.slug,
-    category: a.category || "Article",
+    category: a.topic || "Article",
     title: a.title,
+    postType: a.postType || "article",
     readTime: a.readTime || "5 min read",
     image: a.mainImage ? urlFor(a.mainImage).width(800).height(600).url() : "https://picsum.photos/seed/finance1/800/600"
   })) : fallbackArticles;
 
   return (
-    <section className="py-24 px-6 bg-white border-y border-black/5">
+    <section className="py-24 px-6 bg-white">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-end mb-12">
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Latest Insights</h2>
-            <p className="text-lg text-gray-600">Knowledge from decades of real-world experience.</p>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Featured Articles</h2>
+            <p className="text-lg text-gray-600">Evergreen knowledge from decades of real-world experience.</p>
           </div>
           <button className={`hidden md:flex items-center gap-2 font-medium ${theme.textHover} transition-colors`}>
             View all articles <ArrowRight className="w-4 h-4" />
@@ -240,7 +355,7 @@ function LatestArticles() {
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 className="group cursor-pointer block"
               >
-                <div className="aspect-[4/3] rounded-3xl overflow-hidden mb-6 bg-gray-100">
+                <div className="aspect-[4/3] rounded-3xl overflow-hidden mb-6 bg-gray-100 relative">
                   <img 
                     src={article.image} 
                     alt={article.title} 

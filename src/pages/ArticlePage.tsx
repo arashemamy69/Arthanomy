@@ -46,11 +46,12 @@ export default function ArticlePage() {
   // Fallback content if article not found (or if Sanity is not connected yet)
   const displayArticle = article || {
     title: "The Canadian Couch Potato Strategy Explained",
-    category: "Investing 101",
+    topic: "Investing 101",
+    postType: "article",
     readTime: "8 min read",
     authorName: "Arash Emamy",
     publishedAt: new Date().toISOString(),
-    image: "https://picsum.photos/seed/finance1/1200/600",
+    image: "https://picsum.photos/seed/finance1/1200/675",
     body: [
       {
         _type: "block",
@@ -70,7 +71,7 @@ export default function ArticlePage() {
     ]
   };
 
-  const imageUrl = article?.mainImage ? urlFor(article.mainImage).width(1200).height(600).url() : displayArticle.image;
+  const imageUrl = article?.mainImage ? urlFor(article.mainImage).width(1200).height(675).url() : displayArticle.image;
   
   const formattedDate = displayArticle.publishedAt 
     ? new Date(displayArticle.publishedAt).toLocaleDateString('en-US', {
@@ -124,16 +125,26 @@ export default function ArticlePage() {
   return (
     <article className="pb-24">
       {/* Header Section */}
-      <header className="pt-16 pb-12 px-6 max-w-4xl mx-auto">
+      <header className="pt-16 pb-12 px-6 max-w-3xl mx-auto">
         <Link to="/" className={`inline-flex items-center gap-2 text-sm font-medium text-gray-500 mb-8 ${theme.textHover} transition-colors`}>
           <ArrowLeft className="w-4 h-4" /> Back to Home
         </Link>
         
         <div className="flex items-center gap-3 mb-6">
-          <span className={`text-sm font-bold uppercase tracking-wider ${theme.textPrimary}`}>{displayArticle.category}</span>
+          <span className={`text-sm font-bold uppercase tracking-wider ${theme.textPrimary}`}>{displayArticle.topic || "Article"}</span>
           <span className="text-sm text-gray-400">•</span>
           <span className="text-sm text-gray-500 font-medium">{displayArticle.readTime}</span>
         </div>
+        
+        {displayArticle.tags && displayArticle.tags.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-6">
+            {displayArticle.tags.map((tag: string, index: number) => (
+              <span key={index} className="text-xs font-medium bg-gray-100 text-gray-600 px-2 py-1 rounded-md">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
         
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] mb-8">
           {displayArticle.title}
@@ -159,12 +170,12 @@ export default function ArticlePage() {
       </header>
 
       {/* Featured Image */}
-      <div className="px-6 max-w-6xl mx-auto mb-16">
+      <div className="px-6 max-w-3xl mx-auto mb-16">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="aspect-[21/9] md:aspect-[2.5/1] rounded-[2rem] overflow-hidden bg-gray-100"
+          className="aspect-video rounded-[2rem] overflow-hidden bg-gray-100"
         >
           <img 
             src={imageUrl} 
@@ -187,6 +198,13 @@ export default function ArticlePage() {
           ) : (
             <PortableText value={displayArticle.body} components={ptComponents} />
           )}
+        </div>
+
+        {/* Disclaimer */}
+        <div className="mt-16 pt-8 border-t border-black/10">
+          <p className="text-sm italic text-gray-500 leading-relaxed">
+            Content on Arthanomy is for educational and informational purposes only and does not constitute financial, investment, tax, or legal advice. Authors are not licensed financial advisors. Always do your own research and consult a qualified professional before making any financial decisions. Some content on this site may have been created with the assistance of Artificial Intelligence and may contain errors. Arthanomy may receive affiliate and ad compensation.
+          </p>
         </div>
       </div>
     </article>
