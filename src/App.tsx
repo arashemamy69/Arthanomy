@@ -3,6 +3,7 @@ import { ThemeProvider } from './ThemeContext';
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import ArticlePage from './pages/ArticlePage';
+import PostPage from './pages/PostPage';
 import StudioPage from './pages/StudioPage';
 
 export default function App() {
@@ -14,6 +15,7 @@ export default function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
             <Route path="post/:slug" element={<ArticlePage />} />
+            <Route path="substack/:slug" element={<PostPage />} />
           </Route>
           
           {/* Sanity Studio Route */}
