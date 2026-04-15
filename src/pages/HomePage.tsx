@@ -9,6 +9,7 @@ import { AreaChart, Area, ResponsiveContainer, YAxis } from 'recharts';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../ThemeContext';
 import { getFeaturedArticles, getLatestUpdates, urlFor, SanityArticle } from '../lib/sanity';
+import { getTopicColor } from '../lib/helpers';
 
 const CHART_CONFIG = [
   {
@@ -38,7 +39,7 @@ export default function HomePage() {
       <ArticlesAndEducation />
       <LatestUpdates />
       <SamplePortfolios />
-      <EssentialReading />
+      <LearningSeries />
       <ExploreTopics />
       <Newsletter />
     </>
@@ -50,20 +51,26 @@ function Hero() {
   const [chartData, setChartData] = useState<any[]>([]);
   const [activeChart, setActiveChart] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchAllData() {
       try {
         const results = await Promise.all(CHART_CONFIG.map(async (config) => {
           const res = await fetch(`/api/finance/${config.ticker}`);
-          if (!res.ok) throw new Error('Failed to fetch');
+          if (!res.ok) {
+            const errData = await res.json().catch(() => ({}));
+            throw new Error(errData.error || 'Failed to fetch');
+          }
           const json = await res.json();
           
-          const result = json.chart.result[0];
-          const closes = result.indicators.quote[0].close;
+          // EODHD returns an array of objects: [{ date, adjusted_close, ... }]
+          const validCloses = json.map((item: any) => item.adjusted_close || item.close).filter((c: number | null | undefined) => c != null);
           
-          // Filter out null values
-          const validCloses = closes.filter((c: number | null) => c !== null);
+          if (validCloses.length === 0) {
+            throw new Error('No valid data');
+          }
+
           const initialPrice = validCloses[0];
           const finalPrice = validCloses[validCloses.length - 1];
 
@@ -74,18 +81,20 @@ function Hero() {
 
           const returnPct = (((finalPrice - initialPrice) / initialPrice) * 100).toFixed(1);
           const finalValue = (10000 * (finalPrice / initialPrice)).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+          const isPositive = Number(returnPct) >= 0;
 
           return {
             ...config,
             data,
             finalValue,
-            return: Number(returnPct) >= 0 ? `+${returnPct}%` : `${returnPct}%`
+            return: isPositive ? `+${returnPct}%` : `${returnPct}%`,
+            isPositive
           };
         }));
         setChartData(results);
-      } catch (error) {
+      } catch (error: any) {
         console.error("Error fetching chart data:", error);
-        // Fallback to empty state or handle error
+        setError(error.message || "Failed to load market data");
       } finally {
         setLoading(false);
       }
@@ -122,13 +131,13 @@ function Hero() {
           Financial freedom is achievable for anyone willing to learn. Genuine, lived investing experience for Canadians taking control of their future.
         </p>
         <div className="flex flex-col sm:flex-row gap-4">
-          <button className="bg-[#1a1a1a] text-white px-8 py-4 rounded-full font-medium text-lg hover:bg-black transition-colors flex items-center justify-center gap-2 group">
+          <Link to="/articles" className="bg-[#1a1a1a] text-white px-8 py-4 rounded-full font-medium text-lg hover:bg-black transition-colors flex items-center justify-center gap-2 group">
             Start Learning
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </button>
-          <button className="bg-white border border-black/10 text-[#1a1a1a] px-8 py-4 rounded-full font-medium text-lg hover:bg-gray-50 transition-colors flex items-center justify-center">
+          </Link>
+          <Link to="/portfolios" className="bg-white border border-black/10 text-[#1a1a1a] px-8 py-4 rounded-full font-medium text-lg hover:bg-gray-50 transition-colors flex items-center justify-center">
             View Portfolios
-          </button>
+          </Link>
         </div>
       </motion.div>
       <motion.div 
@@ -137,7 +146,20 @@ function Hero() {
         transition={{ duration: 0.6, delay: 0.2 }}
         className="relative"
       >
-        {loading || !currentData ? (
+        {error ? (
+          <div className="h-[400px] md:h-[480px] bg-white rounded-[2rem] p-6 md:p-8 shadow-xl shadow-black/5 border border-black/5 flex flex-col items-center justify-center text-center">
+            <div className="w-12 h-12 bg-red-50 text-red-500 rounded-full flex items-center justify-center mb-4">
+              <Shield className="w-6 h-6" />
+            </div>
+            <h3 className="text-lg font-bold text-gray-900 mb-2">API Key Required</h3>
+            <p className="text-gray-500 max-w-sm mb-4">
+              {error}
+            </p>
+            <p className="text-sm text-gray-400 max-w-sm">
+              Please add your <code className="bg-gray-100 px-1 py-0.5 rounded text-gray-800">EODHD_API_KEY</code> in the AI Studio Settings (Secrets panel) to view live market data.
+            </p>
+          </div>
+        ) : loading || !currentData ? (
           <div className="h-[400px] md:h-[480px] bg-white rounded-[2rem] p-6 md:p-8 shadow-xl shadow-black/5 border border-black/5 flex flex-col items-center justify-center">
             <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-4"></div>
             <p className="text-gray-500 font-medium">Loading live market data...</p>
@@ -148,13 +170,15 @@ function Hero() {
               <div>
                 <p className="text-lg md:text-xl font-bold text-gray-800 mb-1">{currentData.name}</p>
                 <p className="text-sm font-medium text-gray-500 mb-1">Growth of $10,000 over 5 years</p>
-                <h3 className="text-3xl md:text-4xl font-bold tracking-tight">{currentData.return}</h3>
+                <h3 className={`text-3xl md:text-4xl font-bold tracking-tight ${currentData.isPositive ? 'text-green-600' : 'text-red-600'}`}>
+                  {currentData.return}
+                </h3>
               </div>
               <div className="flex items-center gap-2 z-10">
                 <button onClick={prevChart} className="p-2 rounded-full hover:bg-gray-100 transition-colors">
                   <ChevronLeft className="w-5 h-5" />
                 </button>
-                <div className={`bg-gradient-to-r ${theme.gradientBg} ${theme.textPrimary} border ${theme.borderLight} px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1`}>
+                <div className={`bg-gradient-to-r ${theme.gradientBg} ${currentData.isPositive ? 'text-green-700' : 'text-red-700'} border ${theme.borderLight} px-3 py-1 rounded-full text-sm font-bold flex items-center gap-1`}>
                   <TrendingUp className="w-4 h-4" />
                   {currentData.finalValue}
                 </div>
@@ -163,9 +187,9 @@ function Hero() {
                 </button>
               </div>
             </div>
-            <div className="flex-1 w-full h-full min-h-[200px] md:min-h-[250px] -mb-2">
+            <div className="absolute inset-x-0 bottom-[88px] top-24">
               <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={currentData.data}>
+                <AreaChart data={currentData.data} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
                   <defs>
                     <linearGradient id="colorStroke" x1="0" y1="0" x2="1" y2="0">
                       <stop offset="0%" stopColor={theme.chartStroke} />
@@ -222,7 +246,7 @@ function Hero() {
                 </div>
               </div>
               <div className="text-right">
-                <p className="text-sm font-medium">{currentData.finalValue}</p>
+                <p className={`text-sm font-bold ${currentData.isPositive ? 'text-green-700' : 'text-red-700'}`}>{currentData.finalValue}</p>
                 <p className={`text-xs ${theme.textSecondary}`}>5Y Return</p>
               </div>
             </div>
@@ -287,9 +311,10 @@ function ArticlesAndEducation() {
 
   const displayArticles = sanityArticles.length > 0 ? sanityArticles.map(a => ({
     slug: a.slug,
-    category: a.topic || "Insight",
+    category: a.topic?.title || "Insight",
+    topicSlug: a.topic?.slug?.current,
     title: a.title,
-    postType: a.postType || "article",
+    postType: "article",
     readTime: a.readTime || "5 min read",
     image: a.mainImage ? urlFor(a.mainImage).width(800).height(600).url() : "https://picsum.photos/seed/finance1/800/600"
   })) : fallbackArticles;
@@ -305,15 +330,15 @@ function ArticlesAndEducation() {
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Articles and Education</h2>
             <p className="text-lg text-gray-600">Evergreen knowledge from decades of real-world experience.</p>
           </div>
-          <button className={`hidden md:flex items-center gap-2 font-medium ${theme.textHover} transition-colors`}>
+          <Link to="/articles" className={`hidden md:flex items-center gap-2 font-medium ${theme.textHover} transition-colors`}>
             View all articles <ArrowRight className="w-4 h-4" />
-          </button>
+          </Link>
         </div>
         
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Big Card (Left) */}
           {bentoItems[0] && (
-            <Link to={`/post/${bentoItems[0].slug?.current || ''}`} className="group block h-full">
+            <Link to={`/articles/${bentoItems[0].slug?.current || ''}`} className="group block h-full">
               <motion.article 
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -331,7 +356,7 @@ function ArticlesAndEducation() {
                 </div>
                 <div className="p-8 md:p-10">
                   <div className="flex items-center gap-3 mb-4">
-                    <span className={`text-sm font-bold uppercase tracking-wider ${theme.textPrimary}`}>{bentoItems[0].category}</span>
+                    <span className={`text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full ${getTopicColor(bentoItems[0].topicSlug)}`}>{bentoItems[0].category}</span>
                     <span className="text-sm text-gray-400">•</span>
                     <span className="text-sm text-gray-500 font-medium">{bentoItems[0].readTime}</span>
                   </div>
@@ -346,7 +371,7 @@ function ArticlesAndEducation() {
           {/* 4 Small Cards (Right) */}
           <div className="grid sm:grid-cols-2 gap-6">
             {bentoItems.slice(1, 5).map((article, i) => (
-              <Link to={`/post/${article.slug?.current || ''}`} key={i} className="group block h-full">
+              <Link to={`/articles/${article.slug?.current || ''}`} key={i} className="group block h-full">
                 <motion.article 
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -364,7 +389,7 @@ function ArticlesAndEducation() {
                   </div>
                   <div className="p-6 flex-1 flex flex-col justify-center">
                     <div className="flex items-center gap-2 mb-3">
-                      <span className={`text-xs font-bold uppercase tracking-wider ${theme.textPrimary}`}>{article.category}</span>
+                      <span className={`text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full ${getTopicColor(article.topicSlug)}`}>{article.category}</span>
                     </div>
                     <h3 className={`text-xl font-bold leading-tight ${theme.groupTextHover} transition-colors`}>
                       {article.title}
@@ -376,9 +401,9 @@ function ArticlesAndEducation() {
           </div>
         </div>
         
-        <button className="md:hidden mt-8 w-full flex items-center justify-center gap-2 font-medium py-4 border border-black/10 rounded-full hover:bg-gray-50">
+        <Link to="/articles" className="md:hidden mt-8 w-full flex items-center justify-center gap-2 font-medium py-4 border border-black/10 rounded-full hover:bg-gray-50">
           View all articles <ArrowRight className="w-4 h-4" />
-        </button>
+        </Link>
       </div>
     </section>
   );
@@ -435,7 +460,7 @@ function LatestUpdates() {
   };
 
   const displayUpdates = substackUpdates.length > 0 ? substackUpdates.slice(0, 3).map((item: any) => {
-    const slug = item.link.split('/p/')[1]?.split('?')[0] || '';
+    const slug = item.link?.split('/p/')[1]?.split('?')[0] || '';
     return {
       slug,
       category: "Substack",
@@ -494,9 +519,9 @@ function LatestUpdates() {
             </Link>
           ))}
         </div>
-        <button className="md:hidden mt-8 w-full flex items-center justify-center gap-2 font-medium py-4 border border-black/10 rounded-full hover:bg-gray-50">
+        <a href="https://arthanomy.substack.com/archive" target="_blank" rel="noopener noreferrer" className="md:hidden mt-8 w-full flex items-center justify-center gap-2 font-medium py-4 border border-black/10 rounded-full hover:bg-gray-50">
           View all updates <ArrowRight className="w-4 h-4" />
-        </button>
+        </a>
       </div>
     </section>
   );
@@ -558,26 +583,27 @@ function SamplePortfolios() {
   );
 }
 
-function EssentialReading() {
+function LearningSeries() {
   const { theme } = useTheme();
   const series = [
-    "Investing 101: The Absolute Basics",
-    "Retirement Planning for Canadians",
-    "Tax-Advantaged Accounts (TFSA & RRSP)",
-    "Real Estate & REITs",
-    "Behavioral Finance: Mastering Your Mind"
+    { title: "The Investing Journey", slug: "the-investing-journey" },
+    { title: "Investing 101: The Absolute Basics", slug: "investing-101" },
+    { title: "Retirement Planning for Canadians", slug: "retirement-planning" },
+    { title: "Tax-Advantaged Accounts (TFSA & RRSP)", slug: "tax-advantaged-accounts" },
+    { title: "Real Estate & REITs", slug: "real-estate-reits" },
+    { title: "Behavioral Finance: Mastering Your Mind", slug: "behavioral-finance" }
   ];
 
   return (
     <section className="py-24 px-6 bg-white border-t border-black/5">
       <div className="max-w-4xl mx-auto">
         <div className="mb-12 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Essential Reading</h2>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Learning Series</h2>
           <p className="text-lg text-gray-600">Mini-courses designed to take you from beginner to confident investor.</p>
         </div>
         <div className="flex flex-col gap-4 mb-12">
-          {series.map((title, i) => (
-            <Link to="#" key={i}>
+          {series.map((item, i) => (
+            <Link to={`/learning`} key={i}>
               <motion.div 
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -585,7 +611,12 @@ function EssentialReading() {
                 transition={{ duration: 0.4, delay: i * 0.1 }}
                 className="group flex items-center justify-between p-6 md:p-8 bg-gray-50 rounded-3xl hover:bg-gray-100 transition-colors border border-black/5"
               >
-                <h3 className={`text-xl md:text-2xl font-bold ${theme.groupTextHover} transition-colors`}>{title}</h3>
+                <div className="flex items-center gap-6">
+                  <div className={`text-2xl font-bold text-gray-300 group-hover:${theme.textPrimary} transition-colors`}>
+                    0{i + 1}
+                  </div>
+                  <h3 className={`text-xl md:text-2xl font-bold ${theme.groupTextHover} transition-colors`}>{item.title}</h3>
+                </div>
                 <div className={`w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center shrink-0 ${theme.textPrimary} group-hover:scale-110 transition-transform`}>
                   <ArrowRight className="w-5 h-5" />
                 </div>
@@ -594,9 +625,9 @@ function EssentialReading() {
           ))}
         </div>
         <div className="text-center">
-          <button className={`inline-flex items-center gap-2 font-medium ${theme.textHover} transition-colors`}>
+          <Link to="/learning" className={`inline-flex items-center gap-2 font-medium ${theme.textHover} transition-colors`}>
             Explore More <ArrowRight className="w-4 h-4" />
-          </button>
+          </Link>
         </div>
       </div>
     </section>
@@ -606,14 +637,14 @@ function EssentialReading() {
 function ExploreTopics() {
   const { theme } = useTheme();
   const topics = [
-    { name: "Equities", icon: <LineChart className="w-6 h-6" /> },
-    { name: "Fixed Income", icon: <Landmark className="w-6 h-6" /> },
-    { name: "Real Estate", icon: <Home className="w-6 h-6" /> },
-    { name: "Tax Strategy", icon: <Shield className="w-6 h-6" /> },
-    { name: "Retirement", icon: <Target className="w-6 h-6" /> },
-    { name: "Economics", icon: <Globe className="w-6 h-6" /> },
-    { name: "Mindset", icon: <Lightbulb className="w-6 h-6" /> },
-    { name: "Beginner", icon: <BookOpen className="w-6 h-6" /> },
+    { name: "Education", slug: "education", icon: <BookOpen className="w-6 h-6" /> },
+    { name: "Stocks and ETFs", slug: "stocks-and-etfs", icon: <LineChart className="w-6 h-6" /> },
+    { name: "Income Investing", slug: "income-investing", icon: <Landmark className="w-6 h-6" /> },
+    { name: "Portfolio Strategies", slug: "portfolio-strategies", icon: <PieChart className="w-6 h-6" /> },
+    { name: "Financial Freedom", slug: "financial-freedom", icon: <Target className="w-6 h-6" /> },
+    { name: "Economy", slug: "economy", icon: <Globe className="w-6 h-6" /> },
+    { name: "Real Estate", slug: "real-estate", icon: <Home className="w-6 h-6" /> },
+    { name: "Tax Strategies", slug: "tax-strategies", icon: <Shield className="w-6 h-6" /> },
   ];
 
   return (
@@ -625,13 +656,13 @@ function ExploreTopics() {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {topics.map((topic, i) => (
-            <Link to="#" key={i}>
+            <Link to={`/topic/${topic.slug}`} key={i}>
               <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.05 }}
-                className="bg-white p-6 rounded-3xl border border-black/5 hover:shadow-md transition-all group flex flex-col items-center text-center gap-4"
+                className="bg-white p-6 rounded-3xl border border-black/5 hover:shadow-md transition-all group flex flex-col items-center text-center gap-4 h-full"
               >
                 <div className={`w-14 h-14 rounded-2xl bg-gray-50 flex items-center justify-center ${theme.textPrimary} group-hover:scale-110 transition-transform`}>
                   {topic.icon}
@@ -649,7 +680,7 @@ function ExploreTopics() {
 function Newsletter() {
   const { theme } = useTheme();
   return (
-    <section className="py-24 px-6">
+    <section id="newsletter" className="py-24 px-6">
       <div className="max-w-5xl mx-auto bg-slate-800 rounded-[3rem] p-8 md:p-20 text-center relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
           <div className={`absolute -top-[50%] -left-[10%] w-[70%] h-[150%] ${theme.newsletterBg1} rounded-full blur-3xl transform rotate-12`}></div>
@@ -661,9 +692,11 @@ function Newsletter() {
           <p className={`text-lg ${theme.newsletterText} mb-10`}>
             Get actionable insights, market commentary, and portfolio updates delivered straight to your inbox. No spam, just value.
           </p>
-          <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+          {/* Replace action URL with your actual Substack URL */}
+          <form action="https://arthanomy.substack.com/api/v1/free?nojs=true" method="post" target="_blank" className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
             <input 
               type="email" 
+              name="email"
               placeholder="Your email address" 
               className="flex-1 px-6 py-4 rounded-full bg-white/10 border border-white/20 text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-white/50"
               required
@@ -672,6 +705,7 @@ function Newsletter() {
               Subscribe
             </button>
           </form>
+          <p className="text-white/50 text-sm mt-4">Powered by Substack</p>
         </div>
       </div>
     </section>

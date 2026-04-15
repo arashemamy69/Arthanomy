@@ -29,15 +29,15 @@ function Navbar() {
           <span className="text-2xl font-serif font-bold tracking-tight">Arthanomy</span>
         </Link>
         <div className="hidden md:flex items-center gap-8 text-base font-medium">
-          <Link to="/" className={`${theme.textHover} transition-colors`}>Articles</Link>
-          <Link to="/" className={`${theme.textHover} transition-colors`}>Portfolios</Link>
-          <Link to="/" className={`${theme.textHover} transition-colors`}>Markets</Link>
-          <Link to="/" className={`${theme.textHover} transition-colors`}>About</Link>
+          <Link to="/learning" className={`${theme.textHover} transition-colors`}>Learning</Link>
+          <Link to="/articles" className={`${theme.textHover} transition-colors`}>Articles</Link>
+          <Link to="/portfolios" className={`${theme.textHover} transition-colors`}>Portfolios</Link>
+          <Link to="/about" className={`${theme.textHover} transition-colors`}>About</Link>
         </div>
         <div className="hidden md:flex items-center gap-4">
-          <button className="bg-[#1a1a1a] text-white px-5 py-2.5 rounded-full text-base font-medium hover:bg-black transition-colors">
+          <a href="/#newsletter" className="bg-[#1a1a1a] text-white px-5 py-2.5 rounded-full text-base font-medium hover:bg-black transition-colors">
             Subscribe
-          </button>
+          </a>
         </div>
         <button className="md:hidden">
           <Menu className="w-6 h-6" />
@@ -50,7 +50,7 @@ function Navbar() {
 function Footer() {
   return (
     <footer className="bg-white border-t border-black/5 pt-20 pb-10 px-6">
-      <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-12 mb-16">
+      <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 mb-16">
         <div className="col-span-2 lg:col-span-2">
           <Link to="/" className="flex items-center gap-2 mb-6">
             <div className="w-8 h-8 bg-[#1a1a1a] rounded-full flex items-center justify-center">
@@ -66,28 +66,18 @@ function Footer() {
         <div>
           <h4 className="font-bold mb-4">Content</h4>
           <ul className="space-y-3 text-gray-500 text-sm">
-            <li><Link to="/" className="hover:text-[#1a1a1a]">Articles</Link></li>
-            <li><Link to="/" className="hover:text-[#1a1a1a]">Market Updates</Link></li>
-            <li><Link to="/" className="hover:text-[#1a1a1a]">Portfolios</Link></li>
-            <li><Link to="/" className="hover:text-[#1a1a1a]">Data & Charts</Link></li>
-          </ul>
-        </div>
-        
-        <div>
-          <h4 className="font-bold mb-4">Company</h4>
-          <ul className="space-y-3 text-gray-500 text-sm">
-            <li><Link to="/" className="hover:text-[#1a1a1a]">About</Link></li>
-            <li><Link to="/" className="hover:text-[#1a1a1a]">Contact</Link></li>
-            <li><Link to="/" className="hover:text-[#1a1a1a]">Advertise</Link></li>
+            <li><Link to="/learning" className="hover:text-[#1a1a1a]">Learning</Link></li>
+            <li><Link to="/articles" className="hover:text-[#1a1a1a]">Articles</Link></li>
+            <li><Link to="/portfolios" className="hover:text-[#1a1a1a]">Portfolios</Link></li>
+            <li><Link to="/about" className="hover:text-[#1a1a1a]">About</Link></li>
           </ul>
         </div>
         
         <div>
           <h4 className="font-bold mb-4">Legal</h4>
           <ul className="space-y-3 text-gray-500 text-sm">
-            <li><Link to="/" className="hover:text-[#1a1a1a]">Terms of Service</Link></li>
-            <li><Link to="/" className="hover:text-[#1a1a1a]">Privacy Policy</Link></li>
-            <li><Link to="/" className="hover:text-[#1a1a1a]">Disclaimer</Link></li>
+            <li><Link to="/privacy" className="hover:text-[#1a1a1a]">Privacy Policy</Link></li>
+            <li><Link to="/disclaimer" className="hover:text-[#1a1a1a]">Disclaimer</Link></li>
           </ul>
         </div>
       </div>

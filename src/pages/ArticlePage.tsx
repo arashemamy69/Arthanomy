@@ -1,16 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Clock, Calendar, BookOpen } from 'lucide-react';
 import { PortableText } from '@portabletext/react';
 import Markdown from 'react-markdown';
-import { getArticleBySlug, urlFor } from '../lib/sanity';
+import { getArticleBySlug, getRelatedArticles, urlFor, SanityArticle } from '../lib/sanity';
+import { getPtComponents } from '../lib/portableTextComponents';
+import { getTopicColor } from '../lib/helpers';
 import { useTheme } from '../ThemeContext';
 
 export default function ArticlePage() {
   const { slug } = useParams<{ slug: string }>();
   const { theme } = useTheme();
   const [article, setArticle] = useState<any>(null);
+  const [relatedArticles, setRelatedArticles] = useState<SanityArticle[]>([]);
   const [markdownContent, setMarkdownContent] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -19,6 +22,9 @@ export default function ArticlePage() {
       if (slug) {
         const data = await getArticleBySlug(slug);
         setArticle(data);
+        
+        const related = await getRelatedArticles(slug);
+        setRelatedArticles(related);
         
         if (data?.markdownUrl) {
           try {
@@ -35,6 +41,33 @@ export default function ArticlePage() {
     fetchArticle();
   }, [slug]);
 
+  // Manage canonical URL
+  useEffect(() => {
+    if (!slug) return;
+    
+    const canonicalUrl = `${window.location.origin}/articles/${slug}`;
+    let link: HTMLLinkElement | null = document.querySelector("link[rel='canonical']");
+    let created = false;
+    
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'canonical';
+      document.head.appendChild(link);
+      created = true;
+    }
+    
+    const originalHref = link.href;
+    link.href = canonicalUrl;
+
+    return () => {
+      if (created && link) {
+        document.head.removeChild(link);
+      } else if (link) {
+        link.href = originalHref;
+      }
+    };
+  }, [slug]);
+
   if (loading) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
@@ -46,10 +79,8 @@ export default function ArticlePage() {
   // Fallback content if article not found (or if Sanity is not connected yet)
   const displayArticle = article || {
     title: "The Canadian Couch Potato Strategy Explained",
-    topic: "Investing 101",
-    postType: "article",
+    topic: { title: "Investing 101", slug: { current: "investing-101" } },
     readTime: "8 min read",
-    authorName: "Arash Emamy",
     publishedAt: new Date().toISOString(),
     image: "https://picsum.photos/seed/finance1/1200/675",
     body: [
@@ -82,45 +113,20 @@ export default function ArticlePage() {
     : 'Recently Published';
 
   // Custom components for PortableText to style the rich text
-  const ptComponents = {
-    types: {
-      image: ({ value }: any) => {
-        if (!value?.asset?._ref) {
-          return null;
-        }
-        return (
-          <img
-            alt={value.alt || ' '}
-            loading="lazy"
-            src={urlFor(value).width(800).fit('max').auto('format').url()}
-            className="rounded-2xl my-8 w-full"
-          />
-        );
-      }
-    },
-    block: {
-      h1: ({ children }: any) => <h1 className="text-4xl font-bold mt-12 mb-6">{children}</h1>,
-      h2: ({ children }: any) => <h2 className="text-3xl font-bold mt-10 mb-5">{children}</h2>,
-      h3: ({ children }: any) => <h3 className="text-2xl font-bold mt-8 mb-4">{children}</h3>,
-      h4: ({ children }: any) => <h4 className="text-xl font-bold mt-6 mb-3">{children}</h4>,
-      normal: ({ children }: any) => <p className="text-lg leading-relaxed text-gray-700 mb-6">{children}</p>,
-      blockquote: ({ children }: any) => <blockquote className={`border-l-4 ${theme.borderLight} pl-4 italic text-gray-600 my-6`}>{children}</blockquote>,
-    },
-    marks: {
-      link: ({ children, value }: any) => {
-        const rel = !value.href.startsWith('/') ? 'noreferrer noopener' : undefined;
-        return (
-          <a href={value.href} rel={rel} className={`${theme.textPrimary} hover:underline`}>
-            {children}
-          </a>
-        );
-      },
-    },
-    list: {
-      bullet: ({ children }: any) => <ul className="list-disc pl-6 mb-6 text-lg text-gray-700 space-y-2">{children}</ul>,
-      number: ({ children }: any) => <ol className="list-decimal pl-6 mb-6 text-lg text-gray-700 space-y-2">{children}</ol>,
-    },
-  };
+  const ptComponents = getPtComponents(theme);
+
+  // Find prev/next in series if applicable
+  let prevArticle = null;
+  let nextArticle = null;
+  if (displayArticle.series && displayArticle.series.articles) {
+    const currentIndex = displayArticle.series.articles.findIndex((a: any) => a.slug.current === displayArticle.slug?.current);
+    if (currentIndex > 0) {
+      prevArticle = displayArticle.series.articles[currentIndex - 1];
+    }
+    if (currentIndex !== -1 && currentIndex < displayArticle.series.articles.length - 1) {
+      nextArticle = displayArticle.series.articles[currentIndex + 1];
+    }
+  }
 
   return (
     <article className="pb-24">
@@ -131,39 +137,62 @@ export default function ArticlePage() {
         </Link>
         
         <div className="flex items-center gap-3 mb-6">
-          <span className={`text-sm font-bold uppercase tracking-wider ${theme.textPrimary}`}>{displayArticle.topic || "Article"}</span>
+          {displayArticle.topic ? (
+            <Link 
+              to={`/topic/${displayArticle.topic.slug.current}`}
+              className={`text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full transition-opacity hover:opacity-80 ${getTopicColor(displayArticle.topic.slug.current)}`}
+            >
+              {displayArticle.topic.title}
+            </Link>
+          ) : (
+            <span className={`text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full ${theme.bgLighter} ${theme.textPrimary}`}>
+              Article
+            </span>
+          )}
           <span className="text-sm text-gray-400">•</span>
           <span className="text-sm text-gray-500 font-medium">{displayArticle.readTime}</span>
         </div>
         
         {displayArticle.tags && displayArticle.tags.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-6">
-            {displayArticle.tags.map((tag: string, index: number) => (
-              <span key={index} className="text-xs font-medium bg-gray-100 text-gray-600 px-2 py-1 rounded-md">
-                {tag}
-              </span>
+            {displayArticle.tags.map((tag: any, index: number) => (
+              <Link 
+                to={`/tag/${tag.slug.current}`} 
+                key={index} 
+                className="text-xs font-medium bg-gray-100 text-gray-600 px-3 py-1.5 rounded-full hover:bg-gray-200 transition-colors"
+              >
+                {tag.title}
+              </Link>
             ))}
           </div>
         )}
         
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] mb-8">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] mb-6">
           {displayArticle.title}
         </h1>
+
+        {displayArticle.subtitle && (
+          <p className="text-xl md:text-2xl text-gray-600 leading-relaxed mb-8">
+            {displayArticle.subtitle}
+          </p>
+        )}
         
         <div className="flex items-center gap-4">
-          {displayArticle.authorImage ? (
+          {displayArticle.author?.photo ? (
             <img 
-              src={urlFor(displayArticle.authorImage).width(100).height(100).url()} 
-              alt={displayArticle.authorName} 
+              src={urlFor(displayArticle.author.photo).width(96).height(96).url()} 
+              alt={displayArticle.author.name}
               className="w-12 h-12 rounded-full object-cover"
             />
           ) : (
             <div className={`w-12 h-12 rounded-full ${theme.bgLighter} flex items-center justify-center`}>
-              <span className={`font-bold ${theme.textPrimary}`}>{displayArticle.authorName?.charAt(0) || 'A'}</span>
+              <span className={`font-bold ${theme.textPrimary}`}>
+                {displayArticle.author?.name ? displayArticle.author.name.charAt(0) : 'A'}
+              </span>
             </div>
           )}
           <div>
-            <p className="font-medium">{displayArticle.authorName || 'Arthanomy Editor'}</p>
+            <p className="font-medium">{displayArticle.author?.name || 'Arthanomy Editor'}</p>
             <p className="text-sm text-gray-500">{formattedDate}</p>
           </div>
         </div>
@@ -188,6 +217,27 @@ export default function ArticlePage() {
 
       {/* Article Body */}
       <div className="px-6 max-w-3xl mx-auto">
+        {displayArticle.series && (
+          <div className="mb-10 p-6 bg-gray-50 rounded-2xl border border-black/5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <div className={`w-10 h-10 rounded-xl bg-white flex items-center justify-center ${theme.textPrimary} shrink-0 shadow-sm`}>
+                <BookOpen className="w-5 h-5" />
+              </div>
+              <div>
+                <p className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">
+                  Part {displayArticle.partNumber || 1} of Series
+                </p>
+                <Link to={`/learning/${displayArticle.series.slug.current}`} className={`text-lg font-bold ${theme.textHover} transition-colors`}>
+                  {displayArticle.series.title}
+                </Link>
+              </div>
+            </div>
+            <Link to={`/learning/${displayArticle.series.slug.current}`} className="text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors shrink-0">
+              View all parts &rarr;
+            </Link>
+          </div>
+        )}
+
         <div className="prose prose-lg max-w-none prose-headings:font-bold prose-a:text-blue-600">
           {markdownContent ? (
             <Markdown>{markdownContent}</Markdown>
@@ -200,6 +250,68 @@ export default function ArticlePage() {
           )}
         </div>
 
+        {/* Series Prev/Next Navigation */}
+        {displayArticle.series && (prevArticle || nextArticle) && (
+          <div className="mt-16 pt-8 border-t border-black/10 flex flex-col sm:flex-row gap-4 justify-between">
+            {prevArticle ? (
+              <Link to={`/articles/${prevArticle.slug.current}`} className="flex-1 p-6 rounded-2xl border border-black/5 hover:border-black/10 hover:bg-gray-50 transition-all group">
+                <p className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 flex items-center gap-1">
+                  <ArrowLeft className="w-3 h-3" /> Previous Part
+                </p>
+                <p className={`font-bold ${theme.groupTextHover} transition-colors line-clamp-2`}>{prevArticle.title}</p>
+              </Link>
+            ) : <div className="flex-1"></div>}
+            
+            {nextArticle ? (
+              <Link to={`/articles/${nextArticle.slug.current}`} className="flex-1 p-6 rounded-2xl border border-black/5 hover:border-black/10 hover:bg-gray-50 transition-all group text-right">
+                <p className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 flex items-center justify-end gap-1">
+                  Next Part <ArrowRight className="w-3 h-3" />
+                </p>
+                <p className={`font-bold ${theme.groupTextHover} transition-colors line-clamp-2`}>{nextArticle.title}</p>
+              </Link>
+            ) : <div className="flex-1"></div>}
+          </div>
+        )}
+
+        {/* Author Bio */}
+        {displayArticle.author && (
+          <div className="mt-16 pt-8 border-t border-black/10 flex flex-col sm:flex-row gap-6 items-start">
+            {displayArticle.author.photo ? (
+              <img 
+                src={urlFor(displayArticle.author.photo).width(160).height(160).url()} 
+                alt={displayArticle.author.name}
+                className="w-20 h-20 rounded-full object-cover shrink-0"
+              />
+            ) : (
+              <div className={`w-20 h-20 rounded-full ${theme.bgLighter} flex items-center justify-center shrink-0`}>
+                <span className={`text-2xl font-bold ${theme.textPrimary}`}>
+                  {displayArticle.author.name.charAt(0)}
+                </span>
+              </div>
+            )}
+            <div>
+              <h3 className="text-xl font-bold mb-2">{displayArticle.author.name}</h3>
+              {displayArticle.author.bio && (
+                <p className="text-gray-600 leading-relaxed mb-4">
+                  {displayArticle.author.bio}
+                </p>
+              )}
+              <div className="flex items-center gap-4">
+                {displayArticle.author.linkedinUrl && (
+                  <a href={displayArticle.author.linkedinUrl} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-blue-600 hover:underline">
+                    LinkedIn Profile
+                  </a>
+                )}
+                {displayArticle.author.substackUrl && (
+                  <a href={displayArticle.author.substackUrl} target="_blank" rel="noopener noreferrer" className={`text-sm font-medium ${theme.textPrimary} hover:underline`}>
+                    Substack
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Disclaimer */}
         <div className="mt-16 pt-8 border-t border-black/10">
           <p className="text-sm italic text-gray-500 leading-relaxed">
@@ -207,6 +319,51 @@ export default function ArticlePage() {
           </p>
         </div>
       </div>
+
+      {/* Related Articles */}
+      {relatedArticles.length > 0 && (
+        <div className="mt-24 px-6 max-w-7xl mx-auto">
+          <h2 className="text-3xl font-bold mb-10">Related Articles</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {relatedArticles.map((relArticle, index) => (
+              <motion.div 
+                key={relArticle._id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="group cursor-pointer flex flex-col h-full"
+              >
+                <Link to={`/articles/${relArticle.slug.current}`} className="flex flex-col h-full">
+                  <div className="relative h-48 mb-6 overflow-hidden rounded-[1.5rem]">
+                    <img 
+                      src={relArticle.mainImage ? urlFor(relArticle.mainImage).url() : "https://picsum.photos/seed/invest/800/600"} 
+                      alt={relArticle.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className={`absolute top-4 left-4 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${getTopicColor(relArticle.topic?.slug?.current)}`}>
+                      {relArticle.topic?.title || 'Education'}
+                    </div>
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
+                    {relArticle.title}
+                  </h3>
+                  <div className="flex items-center gap-4 text-xs text-gray-500 font-medium mt-auto pt-4">
+                    <span className="flex items-center gap-1.5">
+                      <Calendar className="w-3.5 h-3.5" />
+                      {new Date(relArticle.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <Clock className="w-3.5 h-3.5" />
+                      {relArticle.readTime || '5 min read'}
+                    </span>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      )}
     </article>
   );
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useTheme } from '../ThemeContext';
 import { ArrowLeft, Calendar, Clock, User } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 export default function PostPage() {
   const { slug } = useParams();
@@ -20,7 +20,7 @@ export default function PostPage() {
         // Find the post by slug (we'll generate a slug from the title or link)
         // Substack links are like https://netinterest.substack.com/p/the-post-slug
         const found = feed.items.find((item: any) => {
-          const itemSlug = item.link.split('/p/')[1]?.split('?')[0];
+          const itemSlug = item.link?.split('/p/')[1]?.split('?')[0];
           return itemSlug === slug;
         });
 
