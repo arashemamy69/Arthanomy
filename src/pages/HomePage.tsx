@@ -64,7 +64,7 @@ function Hero() {
           }
           const json = await res.json();
           
-          // EODHD returns an array of objects: [{ date, adjusted_close, ... }]
+          // The backend now returns [{ date, adjusted_close, close }]
           const validCloses = json.map((item: any) => item.adjusted_close || item.close).filter((c: number | null | undefined) => c != null);
           
           if (validCloses.length === 0) {
@@ -151,12 +151,12 @@ function Hero() {
             <div className="w-12 h-12 bg-red-50 text-red-500 rounded-full flex items-center justify-center mb-4">
               <Shield className="w-6 h-6" />
             </div>
-            <h3 className="text-lg font-bold text-gray-900 mb-2">API Key Required</h3>
+            <h3 className="text-lg font-bold text-gray-900 mb-2">Data Error</h3>
             <p className="text-gray-500 max-w-sm mb-4">
               {error}
             </p>
             <p className="text-sm text-gray-400 max-w-sm">
-              Please add your <code className="bg-gray-100 px-1 py-0.5 rounded text-gray-800">EODHD_API_KEY</code> in the AI Studio Settings (Secrets panel) to view live market data.
+              There was an issue fetching market data from Yahoo Finance.
             </p>
           </div>
         ) : loading || !currentData ? (

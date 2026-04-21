@@ -1,0 +1,1229 @@
+{
+  "ZWU.TO_dividends_2021-04-01": {
+    "data": [
+      {
+        "amount": 0.08,
+        "date": "2021-04-28T13:30:00.000Z"
+      },
+      {
+        "amount": 0.08,
+        "date": "2021-05-26T13:30:00.000Z"
+      },
+      {
+        "amount": 0.08,
+        "date": "2021-06-28T13:30:00.000Z"
+      },
+      {
+        "amount": 0.08,
+        "date": "2021-07-28T13:30:00.000Z"
+      },
+      {
+        "amount": 0.08,
+        "date": "2021-08-27T13:30:00.000Z"
+      },
+      {
+        "amount": 0.08,
+        "date": "2021-09-28T13:30:00.000Z"
+      },
+      {
+        "amount": 0.08,
+        "date": "2021-10-27T13:30:00.000Z"
+      },
+      {
+        "amount": 0.08,
+        "date": "2021-11-26T14:30:00.000Z"
+      },
+      {
+        "amount": 0.08,
+        "date": "2021-12-29T14:30:00.000Z"
+      },
+      {
+        "amount": 0.08,
+        "date": "2022-01-27T14:30:00.000Z"
+      },
+      {
+        "amount": 0.08,
+        "date": "2022-02-24T14:30:00.000Z"
+      },
+      {
+        "amount": 0.08,
+        "date": "2022-03-29T13:30:00.000Z"
+      },
+      {
+        "amount": 0.08,
+        "date": "2022-04-27T13:30:00.000Z"
+      },
+      {
+        "amount": 0.08,
+        "date": "2022-05-27T13:30:00.000Z"
+      },
+      {
+        "amount": 0.08,
+        "date": "2022-06-28T13:30:00.000Z"
+      },
+      {
+        "amount": 0.08,
+        "date": "2022-07-27T13:30:00.000Z"
+      },
+      {
+        "amount": 0.08,
+        "date": "2022-08-29T13:30:00.000Z"
+      },
+      {
+        "amount": 0.08,
+        "date": "2022-09-28T13:30:00.000Z"
+      },
+      {
+        "amount": 0.08,
+        "date": "2022-10-27T13:30:00.000Z"
+      },
+      {
+        "amount": 0.08,
+        "date": "2022-11-28T14:30:00.000Z"
+      },
+      {
+        "amount": 0.08,
+        "date": "2022-12-28T14:30:00.000Z"
+      },
+      {
+        "amount": 0.08,
+        "date": "2023-01-27T14:30:00.000Z"
+      },
+      {
+        "amount": 0.08,
+        "date": "2023-02-24T14:30:00.000Z"
+      },
+      {
+        "amount": 0.08,
+        "date": "2023-03-29T13:30:00.000Z"
+      },
+      {
+        "amount": 0.08,
+        "date": "2023-04-26T13:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2023-05-30T13:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2023-06-28T13:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2023-07-27T13:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2023-08-29T13:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2023-09-27T13:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2023-10-27T13:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2023-11-28T14:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2023-12-27T14:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2024-01-29T14:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2024-02-27T14:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2024-03-27T13:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2024-04-26T13:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2024-05-30T13:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2024-06-27T13:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2024-07-30T13:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2024-08-29T13:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2024-09-27T13:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2024-10-30T13:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2024-11-27T14:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2024-12-30T14:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2025-01-30T14:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2025-02-27T14:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2025-03-28T13:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2025-04-29T13:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2025-05-29T13:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2025-06-27T13:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2025-07-30T13:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2025-08-28T13:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2025-09-29T13:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2025-10-30T13:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2025-11-26T14:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2025-12-30T14:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2026-01-29T14:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2026-02-26T14:30:00.000Z"
+      },
+      {
+        "amount": 0.07,
+        "date": "2026-03-30T13:30:00.000Z"
+      }
+    ],
+    "timestamp": 1776358313140
+  },
+  "V_quote_2021-04-01": {
+    "data": {
+      "language": "en-US",
+      "region": "US",
+      "quoteType": "EQUITY",
+      "typeDisp": "Equity",
+      "quoteSourceName": "Nasdaq Real Time Price",
+      "triggerable": true,
+      "customPriceAlertConfidence": "HIGH",
+      "currency": "USD",
+      "corporateActions": [],
+      "regularMarketTime": "2026-04-16T17:24:40.000Z",
+      "exchange": "NYQ",
+      "messageBoardId": "finmb_38043467",
+      "exchangeTimezoneName": "America/New_York",
+      "exchangeTimezoneShortName": "EDT",
+      "gmtOffSetMilliseconds": -14400000,
+      "market": "us_market",
+      "esgPopulated": false,
+      "dividendRate": 2.68,
+      "trailingAnnualDividendYield": 0.007976956,
+      "dividendYield": 0.85,
+      "epsTrailingTwelveMonths": 10.65,
+      "epsForward": 14.54471,
+      "epsCurrentYear": 12.86244,
+      "priceEpsCurrentYear": 24.55133,
+      "sharesOutstanding": 1681093942,
+      "bookValue": 20.034,
+      "fiftyDayAverage": 312.6878,
+      "fiftyDayAverageChange": 3.1022034,
+      "fiftyDayAverageChangePercent": 0.009921089,
+      "twoHundredDayAverage": 334.94226,
+      "twoHundredDayAverageChange": -19.152252,
+      "twoHundredDayAverageChangePercent": -0.05718076,
+      "marketCap": 608855654400,
+      "forwardPE": 21.711674,
+      "priceToBook": 15.762704,
+      "sourceInterval": 15,
+      "exchangeDataDelayedBy": 0,
+      "averageAnalystRating": "1.3 - Strong Buy",
+      "tradeable": false,
+      "cryptoTradeable": false,
+      "hasPrePostMarketData": true,
+      "firstTradeDateMilliseconds": "2008-03-19T13:30:00.000Z",
+      "priceHint": 2,
+      "regularMarketChange": -0.11999512,
+      "regularMarketDayHigh": 318,
+      "regularMarketDayRange": {
+        "low": 314.57,
+        "high": 318
+      },
+      "regularMarketDayLow": 314.57,
+      "regularMarketVolume": 1853827,
+      "regularMarketPreviousClose": 315.91,
+      "bid": 315.93,
+      "ask": 316,
+      "bidSize": 40,
+      "askSize": 160,
+      "fullExchangeName": "NYSE",
+      "financialCurrency": "USD",
+      "regularMarketOpen": 316.35,
+      "averageDailyVolume3Month": 7623871,
+      "averageDailyVolume10Day": 5606540,
+      "fiftyTwoWeekLowChange": 21.899994,
+      "fiftyTwoWeekLowChangePercent": 0.07451765,
+      "fiftyTwoWeekRange": {
+        "low": 293.89,
+        "high": 375.51
+      },
+      "fiftyTwoWeekHighChange": -59.72,
+      "fiftyTwoWeekHighChangePercent": -0.15903704,
+      "fiftyTwoWeekLow": 293.89,
+      "fiftyTwoWeekHigh": 375.51,
+      "fiftyTwoWeekChangePercent": -4.1564283,
+      "dividendDate": "2026-03-02T00:00:00.000Z",
+      "earningsTimestamp": "2026-04-28T20:00:00.000Z",
+      "earningsTimestampStart": "2026-04-28T20:00:00.000Z",
+      "earningsTimestampEnd": "2026-04-28T20:00:00.000Z",
+      "earningsCallTimestampStart": "2026-04-28T21:00:00.000Z",
+      "earningsCallTimestampEnd": "2026-04-28T21:00:00.000Z",
+      "isEarningsDateEstimate": false,
+      "trailingAnnualDividendRate": 2.52,
+      "trailingPE": 29.651646,
+      "marketState": "REGULAR",
+      "regularMarketChangePercent": -0.037983958,
+      "regularMarketPrice": 315.79,
+      "shortName": "Visa Inc.",
+      "longName": "Visa Inc.",
+      "displayName": "Visa",
+      "symbol": "V"
+    },
+    "timestamp": 1776360287195
+  },
+  "HDIV.TO_quote_2021-04-01": {
+    "data": {
+      "language": "en-US",
+      "region": "US",
+      "quoteType": "ETF",
+      "typeDisp": "ETF",
+      "quoteSourceName": "Delayed Quote",
+      "triggerable": true,
+      "customPriceAlertConfidence": "HIGH",
+      "currency": "CAD",
+      "exchange": "TOR",
+      "messageBoardId": "finmb_718419889",
+      "exchangeTimezoneName": "America/Toronto",
+      "exchangeTimezoneShortName": "EDT",
+      "gmtOffSetMilliseconds": -14400000,
+      "market": "ca_market",
+      "esgPopulated": false,
+      "regularMarketChangePercent": 0.04518856,
+      "regularMarketPrice": 22.14,
+      "trailingThreeMonthReturns": 4.18308,
+      "trailingThreeMonthNavReturns": 4.18308,
+      "netAssets": 1386784000,
+      "epsTrailingTwelveMonths": 1.1974788,
+      "fiftyDayAverage": 21.4034,
+      "fiftyDayAverageChange": 0.73659897,
+      "fiftyDayAverageChangePercent": 0.034415044,
+      "twoHundredDayAverage": 20.270275,
+      "twoHundredDayAverageChange": 1.8697243,
+      "twoHundredDayAverageChangePercent": 0.09223971,
+      "sourceInterval": 15,
+      "exchangeDataDelayedBy": 15,
+      "tradeable": false,
+      "cryptoTradeable": false,
+      "hasPrePostMarketData": false,
+      "firstTradeDateMilliseconds": "2021-07-21T13:30:00.000Z",
+      "priceHint": 2,
+      "regularMarketChange": 0.010000229,
+      "regularMarketDayHigh": 22.25,
+      "regularMarketDayRange": {
+        "low": 22.1,
+        "high": 22.25
+      },
+      "regularMarketDayLow": 22.1,
+      "regularMarketVolume": 137137,
+      "regularMarketPreviousClose": 22.13,
+      "bid": 22.13,
+      "ask": 22.15,
+      "fullExchangeName": "Toronto",
+      "regularMarketOpen": 22.18,
+      "averageDailyVolume3Month": 246580,
+      "averageDailyVolume10Day": 193200,
+      "fiftyTwoWeekLowChange": 6.249999,
+      "fiftyTwoWeekLowChangePercent": 0.39332908,
+      "fiftyTwoWeekRange": {
+        "low": 15.89,
+        "high": 22.36
+      },
+      "fiftyTwoWeekHighChange": -0.22000122,
+      "fiftyTwoWeekHighChangePercent": -0.009839052,
+      "fiftyTwoWeekLow": 15.89,
+      "fiftyTwoWeekHigh": 22.36,
+      "fiftyTwoWeekChangePercent": 36.436497,
+      "trailingAnnualDividendRate": 0,
+      "trailingPE": 18.488846,
+      "trailingAnnualDividendYield": 0,
+      "dividendYield": 10.1,
+      "ytdReturn": 4.18308,
+      "corporateActions": [],
+      "regularMarketTime": "2026-04-16T19:59:59.000Z",
+      "marketState": "POSTPOST",
+      "shortName": "HAMILTON ENHANCED CDN COVERED C",
+      "longName": "Hamilton Enhanced Canadian Covered Call ETF",
+      "symbol": "HDIV.TO"
+    },
+    "timestamp": 1776384557031
+  },
+  "XIC.TO_historical_2021-04-17": {
+    "data": [
+      {
+        "date": "2021-05-01T04:00:00.000Z",
+        "high": 32.19858169555664,
+        "volume": 7406153,
+        "open": 31.02330207824707,
+        "low": 30.739614486694336,
+        "close": 31.904762268066406,
+        "adjclose": 27.767333984375
+      },
+      {
+        "date": "2021-06-01T04:00:00.000Z",
+        "high": 32.83687973022461,
+        "volume": 8021053,
+        "open": 32.23910903930664,
+        "low": 32.17831802368164,
+        "close": 32.482269287109375,
+        "adjclose": 28.269948959350586
+      },
+      {
+        "date": "2021-07-01T04:00:00.000Z",
+        "high": 32.84701156616211,
+        "volume": 6525553,
+        "open": 32.634246826171875,
+        "low": 31.600811004638672,
+        "close": 32.74569320678711,
+        "adjclose": 28.680912017822266
+      },
+      {
+        "date": "2021-08-01T04:00:00.000Z",
+        "high": 33.45491409301758,
+        "volume": 3958467,
+        "open": 32.78622055053711,
+        "low": 32.482269287109375,
+        "close": 33.252281188964844,
+        "adjclose": 29.12462043762207
+      },
+      {
+        "date": "2021-09-01T04:00:00.000Z",
+        "high": 33.78926086425781,
+        "volume": 6500878,
+        "open": 33.252281188964844,
+        "low": 32.29990005493164,
+        "close": 32.31003189086914,
+        "adjclose": 28.299333572387695
+      },
+      {
+        "date": "2021-10-01T04:00:00.000Z",
+        "high": 34.38703155517578,
+        "volume": 5723911,
+        "open": 32.391082763671875,
+        "low": 32.13779067993164,
+        "close": 33.94123458862305,
+        "adjclose": 29.9166316986084
+      },
+      {
+        "date": "2021-11-01T04:00:00.000Z",
+        "high": 35.167171478271484,
+        "volume": 5620969,
+        "open": 34.08308029174805,
+        "low": 33.40425491333008,
+        "close": 33.43465042114258,
+        "adjclose": 29.470117568969727
+      },
+      {
+        "date": "2021-12-01T05:00:00.000Z",
+        "high": 34.680850982666016,
+        "volume": 8879239,
+        "open": 33.81965637207031,
+        "low": 32.988853454589844,
+        "close": 33.72999954223633,
+        "adjclose": 29.73044204711914
+      },
+      {
+        "date": "2022-01-01T05:00:00.000Z",
+        "high": 34.34000015258789,
+        "volume": 20124000,
+        "open": 34.189998626708984,
+        "low": 31.690000534057617,
+        "close": 33.61000061035156,
+        "adjclose": 29.802316665649414
+      },
+      {
+        "date": "2022-02-01T05:00:00.000Z",
+        "high": 34.70000076293945,
+        "volume": 11974900,
+        "open": 33.7400016784668,
+        "low": 32.5099983215332,
+        "close": 33.70000076293945,
+        "adjclose": 29.882122039794922
+      },
+      {
+        "date": "2022-03-01T05:00:00.000Z",
+        "high": 35.41999816894531,
+        "volume": 14678800,
+        "open": 33.70000076293945,
+        "low": 33.369998931884766,
+        "close": 34.86000061035156,
+        "adjclose": 30.910707473754883
+      },
+      {
+        "date": "2022-04-01T04:00:00.000Z",
+        "high": 35.33000183105469,
+        "volume": 11275500,
+        "open": 34.97999954223633,
+        "low": 32.86000061035156,
+        "close": 33.11000061035156,
+        "adjclose": 29.54250144958496
+      },
+      {
+        "date": "2022-05-01T04:00:00.000Z",
+        "high": 33.79999923706055,
+        "volume": 12719400,
+        "open": 33.02000045776367,
+        "low": 31.079999923706055,
+        "close": 33.119998931884766,
+        "adjclose": 29.55141830444336
+      },
+      {
+        "date": "2022-06-01T04:00:00.000Z",
+        "high": 33.619998931884766,
+        "volume": 17018800,
+        "open": 33.290000915527344,
+        "low": 29.68000030517578,
+        "close": 30.010000228881836,
+        "adjclose": 26.776514053344727
+      },
+      {
+        "date": "2022-07-01T04:00:00.000Z",
+        "high": 31.450000762939453,
+        "volume": 8466400,
+        "open": 30.100000381469727,
+        "low": 28.93000030517578,
+        "close": 31.40999984741211,
+        "adjclose": 28.25008773803711
+      },
+      {
+        "date": "2022-08-01T04:00:00.000Z",
+        "high": 32.41999816894531,
+        "volume": 9562400,
+        "open": 31.200000762939453,
+        "low": 30.8700008392334,
+        "close": 30.8700008392334,
+        "adjclose": 27.764408111572266
+      },
+      {
+        "date": "2022-09-01T04:00:00.000Z",
+        "high": 32.029998779296875,
+        "volume": 13304000,
+        "open": 30.670000076293945,
+        "low": 28.959999084472656,
+        "close": 29.290000915527344,
+        "adjclose": 26.343360900878906
+      },
+      {
+        "date": "2022-10-01T04:00:00.000Z",
+        "high": 31.059999465942383,
+        "volume": 10668000,
+        "open": 29.579999923706055,
+        "low": 28.440000534057617,
+        "close": 30.920000076293945,
+        "adjclose": 28.061126708984375
+      },
+      {
+        "date": "2022-11-01T04:00:00.000Z",
+        "high": 32.63999938964844,
+        "volume": 8610600,
+        "open": 31.260000228881836,
+        "low": 30.389999389648438,
+        "close": 32.619998931884766,
+        "adjclose": 29.603940963745117
+      },
+      {
+        "date": "2022-12-01T05:00:00.000Z",
+        "high": 32.95000076293945,
+        "volume": 10151800,
+        "open": 32.7400016784668,
+        "low": 30.6200008392334,
+        "close": 30.809999465942383,
+        "adjclose": 27.961294174194336
+      },
+      {
+        "date": "2023-01-01T05:00:00.000Z",
+        "high": 33.099998474121094,
+        "volume": 6104700,
+        "open": 31.010000228881836,
+        "low": 30.829999923706055,
+        "close": 33.08000183105469,
+        "adjclose": 30.243955612182617
+      },
+      {
+        "date": "2023-02-01T05:00:00.000Z",
+        "high": 33.2400016784668,
+        "volume": 6796400,
+        "open": 33.0099983215332,
+        "low": 31.899999618530273,
+        "close": 32.27000045776367,
+        "adjclose": 29.50339698791504
+      },
+      {
+        "date": "2023-03-01T05:00:00.000Z",
+        "high": 32.93000030517578,
+        "volume": 8421200,
+        "open": 32.27000045776367,
+        "low": 30.600000381469727,
+        "close": 31.93000030517578,
+        "adjclose": 29.19254493713379
+      },
+      {
+        "date": "2023-04-01T04:00:00.000Z",
+        "high": 32.970001220703125,
+        "volume": 6651300,
+        "open": 32.130001068115234,
+        "low": 31.969999313354492,
+        "close": 32.86000061035156,
+        "adjclose": 30.292200088500977
+      },
+      {
+        "date": "2023-05-01T04:00:00.000Z",
+        "high": 33.06999969482422,
+        "volume": 6717900,
+        "open": 32.900001525878906,
+        "low": 31.170000076293945,
+        "close": 31.25,
+        "adjclose": 28.80801010131836
+      },
+      {
+        "date": "2023-06-01T04:00:00.000Z",
+        "high": 32.22999954223633,
+        "volume": 5491500,
+        "open": 31.219999313354492,
+        "low": 30.799999237060547,
+        "close": 32.0099983215332,
+        "adjclose": 29.50861930847168
+      },
+      {
+        "date": "2023-07-01T04:00:00.000Z",
+        "high": 32.90999984741211,
+        "volume": 3341700,
+        "open": 32.099998474121094,
+        "low": 31.350000381469727,
+        "close": 32.81999969482422,
+        "adjclose": 30.51749610900879
+      },
+      {
+        "date": "2023-08-01T04:00:00.000Z",
+        "high": 32.779998779296875,
+        "volume": 3652000,
+        "open": 32.720001220703125,
+        "low": 31.3700008392334,
+        "close": 32.400001525878906,
+        "adjclose": 30.12696075439453
+      },
+      {
+        "date": "2023-09-01T04:00:00.000Z",
+        "high": 33.0099983215332,
+        "volume": 3610800,
+        "open": 32.630001068115234,
+        "low": 30.68000030517578,
+        "close": 31.040000915527344,
+        "adjclose": 28.86237144470215
+      },
+      {
+        "date": "2023-10-01T04:00:00.000Z",
+        "high": 31.420000076293945,
+        "volume": 5463500,
+        "open": 31.010000228881836,
+        "low": 29.75,
+        "close": 30.049999237060547,
+        "adjclose": 28.184114456176758
+      },
+      {
+        "date": "2023-11-01T04:00:00.000Z",
+        "high": 32.29999923706055,
+        "volume": 5764200,
+        "open": 30.139999389648438,
+        "low": 30.100000381469727,
+        "close": 32.29999923706055,
+        "adjclose": 30.294408798217773
+      },
+      {
+        "date": "2023-12-01T05:00:00.000Z",
+        "high": 33.720001220703125,
+        "volume": 4397300,
+        "open": 32.220001220703125,
+        "low": 32.16999816894531,
+        "close": 33.369998931884766,
+        "adjclose": 31.297964096069336
+      },
+      {
+        "date": "2024-01-01T05:00:00.000Z",
+        "high": 33.900001525878906,
+        "volume": 5496700,
+        "open": 33.27000045776367,
+        "low": 32.81999969482422,
+        "close": 33.560001373291016,
+        "adjclose": 31.653284072875977
+      },
+      {
+        "date": "2024-02-01T05:00:00.000Z",
+        "high": 34.25,
+        "volume": 4516500,
+        "open": 33.66999816894531,
+        "low": 32.650001525878906,
+        "close": 34.13999938964844,
+        "adjclose": 32.2003288269043
+      },
+      {
+        "date": "2024-03-01T05:00:00.000Z",
+        "high": 35.540000915527344,
+        "volume": 4023500,
+        "open": 34.22999954223633,
+        "low": 34.220001220703125,
+        "close": 35.310001373291016,
+        "adjclose": 33.30385208129883
+      },
+      {
+        "date": "2024-04-01T04:00:00.000Z",
+        "high": 35.650001525878906,
+        "volume": 6789900,
+        "open": 35.380001068115234,
+        "low": 34.349998474121094,
+        "close": 34.68000030517578,
+        "adjclose": 32.947113037109375
+      },
+      {
+        "date": "2024-05-01T04:00:00.000Z",
+        "high": 36.029998779296875,
+        "volume": 6143400,
+        "open": 34.630001068115234,
+        "low": 34.5,
+        "close": 35.619998931884766,
+        "adjclose": 33.84013748168945
+      },
+      {
+        "date": "2024-06-01T04:00:00.000Z",
+        "high": 35.70000076293945,
+        "volume": 9909900,
+        "open": 35.619998931884766,
+        "low": 34.40999984741211,
+        "close": 34.849998474121094,
+        "adjclose": 33.108612060546875
+      },
+      {
+        "date": "2024-07-01T04:00:00.000Z",
+        "high": 37.029998779296875,
+        "volume": 5987600,
+        "open": 34.810001373291016,
+        "low": 34.72999954223633,
+        "close": 36.869998931884766,
+        "adjclose": 35.295928955078125
+      },
+      {
+        "date": "2024-08-01T04:00:00.000Z",
+        "high": 37.400001525878906,
+        "volume": 4632900,
+        "open": 36.90999984741211,
+        "low": 34.599998474121094,
+        "close": 37.29999923706055,
+        "adjclose": 35.70757293701172
+      },
+      {
+        "date": "2024-09-01T04:00:00.000Z",
+        "high": 38.369998931884766,
+        "volume": 4925500,
+        "open": 37.099998474121094,
+        "low": 36.279998779296875,
+        "close": 38.189998626708984,
+        "adjclose": 36.55957794189453
+      },
+      {
+        "date": "2024-10-01T04:00:00.000Z",
+        "high": 39.68000030517578,
+        "volume": 7962600,
+        "open": 38.20000076293945,
+        "low": 37.95000076293945,
+        "close": 38.529998779296875,
+        "adjclose": 37.155941009521484
+      },
+      {
+        "date": "2024-11-01T04:00:00.000Z",
+        "high": 41.04999923706055,
+        "volume": 5262800,
+        "open": 38.720001220703125,
+        "low": 38.54999923706055,
+        "close": 40.9900016784668,
+        "adjclose": 39.52821350097656
+      },
+      {
+        "date": "2024-12-01T05:00:00.000Z",
+        "high": 41.310001373291016,
+        "volume": 5142300,
+        "open": 41.040000915527344,
+        "low": 38.810001373291016,
+        "close": 39.40999984741211,
+        "adjclose": 38.00455856323242
+      },
+      {
+        "date": "2025-01-01T05:00:00.000Z",
+        "high": 41.29999923706055,
+        "volume": 5094100,
+        "open": 39.650001525878906,
+        "low": 39.029998779296875,
+        "close": 40.77000045776367,
+        "adjclose": 39.5550651550293
+      },
+      {
+        "date": "2025-02-01T05:00:00.000Z",
+        "high": 41.099998474121094,
+        "volume": 6619800,
+        "open": 39.20000076293945,
+        "low": 39.20000076293945,
+        "close": 40.59000015258789,
+        "adjclose": 39.38042068481445
+      },
+      {
+        "date": "2025-03-01T05:00:00.000Z",
+        "high": 40.869998931884766,
+        "volume": 10289000,
+        "open": 40.709999084472656,
+        "low": 38.63999938964844,
+        "close": 39.7400016784668,
+        "adjclose": 38.55575180053711
+      },
+      {
+        "date": "2025-04-01T04:00:00.000Z",
+        "high": 40.349998474121094,
+        "volume": 10152500,
+        "open": 39.720001220703125,
+        "low": 35.40999984741211,
+        "close": 39.65999984741211,
+        "adjclose": 38.73855972290039
+      },
+      {
+        "date": "2025-05-01T04:00:00.000Z",
+        "high": 42.25,
+        "volume": 4448300,
+        "open": 39.720001220703125,
+        "low": 39.529998779296875,
+        "close": 41.869998931884766,
+        "adjclose": 40.89720916748047
+      },
+      {
+        "date": "2025-06-01T04:00:00.000Z",
+        "high": 43.15999984741211,
+        "volume": 4176000,
+        "open": 41.959999084472656,
+        "low": 41.880001068115234,
+        "close": 42.79999923706055,
+        "adjclose": 41.80560302734375
+      },
+      {
+        "date": "2025-07-01T04:00:00.000Z",
+        "high": 44.040000915527344,
+        "volume": 3839300,
+        "open": 42.849998474121094,
+        "low": 42.66999816894531,
+        "close": 43.56999969482422,
+        "adjclose": 42.849918365478516
+      },
+      {
+        "date": "2025-08-01T04:00:00.000Z",
+        "high": 45.77000045776367,
+        "volume": 3792500,
+        "open": 43.27000045776367,
+        "low": 42.88999938964844,
+        "close": 45.70000076293945,
+        "adjclose": 44.94471740722656
+      },
+      {
+        "date": "2025-09-01T04:00:00.000Z",
+        "high": 48.18000030517578,
+        "volume": 5457000,
+        "open": 45.689998626708984,
+        "low": 45.41999816894531,
+        "close": 47.869998931884766,
+        "adjclose": 47.07884979248047
+      },
+      {
+        "date": "2025-10-01T04:00:00.000Z",
+        "high": 49.150001525878906,
+        "volume": 8593800,
+        "open": 47.83000183105469,
+        "low": 47.540000915527344,
+        "close": 48.34000015258789,
+        "adjclose": 47.82233428955078
+      },
+      {
+        "date": "2025-11-01T04:00:00.000Z",
+        "high": 50.2400016784668,
+        "volume": 6390400,
+        "open": 48.40999984741211,
+        "low": 47.16999816894531,
+        "close": 50.209999084472656,
+        "adjclose": 49.672306060791016
+      },
+      {
+        "date": "2025-12-01T05:00:00.000Z",
+        "high": 51.38999938964844,
+        "volume": 6845900,
+        "open": 50.060001373291016,
+        "low": 49.43000030517578,
+        "close": 50.54999923706055,
+        "adjclose": 50.0086669921875
+      },
+      {
+        "date": "2026-01-01T05:00:00.000Z",
+        "high": 53.380001068115234,
+        "volume": 11560700,
+        "open": 50.849998474121094,
+        "low": 50.529998779296875,
+        "close": 51.0099983215332,
+        "adjclose": 50.742610931396484
+      },
+      {
+        "date": "2026-02-01T05:00:00.000Z",
+        "high": 55.18000030517578,
+        "volume": 11333400,
+        "open": 51.02000045776367,
+        "low": 50.79999923706055,
+        "close": 54.90999984741211,
+        "adjclose": 54.622169494628906
+      },
+      {
+        "date": "2026-03-01T05:00:00.000Z",
+        "high": 55.25,
+        "volume": 14504900,
+        "open": 54.790000915527344,
+        "low": 49.900001525878906,
+        "close": 52.2400016784668,
+        "adjclose": 51.96616744995117
+      },
+      {
+        "date": "2026-04-01T04:00:00.000Z",
+        "high": 54.72999954223633,
+        "volume": 4786200,
+        "open": 52.63999938964844,
+        "low": 51.86000061035156,
+        "close": 54.5099983215332,
+        "adjclose": 54.5099983215332
+      },
+      {
+        "date": "2026-04-16T19:59:40.000Z",
+        "high": 54.79999923706055,
+        "volume": 778643,
+        "open": 54.709999084472656,
+        "low": 54.310001373291016,
+        "close": 54.349998474121094,
+        "adjclose": 54.349998474121094
+      }
+    ],
+    "timestamp": 1776384558442
+  },
+  "JNJ_dividends_2021-04-01": {
+    "data": [
+      {
+        "amount": 1.06,
+        "date": "2021-05-24T13:30:00.000Z"
+      },
+      {
+        "amount": 1.06,
+        "date": "2021-08-23T13:30:00.000Z"
+      },
+      {
+        "amount": 1.06,
+        "date": "2021-11-22T14:30:00.000Z"
+      },
+      {
+        "amount": 1.06,
+        "date": "2022-02-18T14:30:00.000Z"
+      },
+      {
+        "amount": 1.13,
+        "date": "2022-05-23T13:30:00.000Z"
+      },
+      {
+        "amount": 1.13,
+        "date": "2022-08-22T13:30:00.000Z"
+      },
+      {
+        "amount": 1.13,
+        "date": "2022-11-21T14:30:00.000Z"
+      },
+      {
+        "amount": 1.13,
+        "date": "2023-02-17T14:30:00.000Z"
+      },
+      {
+        "amount": 1.19,
+        "date": "2023-05-22T13:30:00.000Z"
+      },
+      {
+        "amount": 1.19,
+        "date": "2023-08-25T13:30:00.000Z"
+      },
+      {
+        "amount": 1.19,
+        "date": "2023-11-20T14:30:00.000Z"
+      },
+      {
+        "amount": 1.19,
+        "date": "2024-02-16T14:30:00.000Z"
+      },
+      {
+        "amount": 1.24,
+        "date": "2024-05-20T13:30:00.000Z"
+      },
+      {
+        "amount": 1.24,
+        "date": "2024-08-27T13:30:00.000Z"
+      },
+      {
+        "amount": 1.24,
+        "date": "2024-11-26T14:30:00.000Z"
+      },
+      {
+        "amount": 1.24,
+        "date": "2025-02-18T14:30:00.000Z"
+      },
+      {
+        "amount": 1.3,
+        "date": "2025-05-27T13:30:00.000Z"
+      },
+      {
+        "amount": 1.3,
+        "date": "2025-08-26T13:30:00.000Z"
+      },
+      {
+        "amount": 1.3,
+        "date": "2025-11-25T14:30:00.000Z"
+      },
+      {
+        "amount": 1.3,
+        "date": "2026-02-24T14:30:00.000Z"
+      }
+    ],
+    "timestamp": 1776384564151
+  },
+  "ZWU.TO_quote_2021-04-01": {
+    "data": {
+      "language": "en-US",
+      "region": "US",
+      "quoteType": "ETF",
+      "typeDisp": "ETF",
+      "quoteSourceName": "Delayed Quote",
+      "triggerable": true,
+      "customPriceAlertConfidence": "HIGH",
+      "exchange": "TOR",
+      "messageBoardId": "finmb_139615776",
+      "exchangeTimezoneName": "America/Toronto",
+      "exchangeTimezoneShortName": "EDT",
+      "gmtOffSetMilliseconds": -14400000,
+      "market": "ca_market",
+      "esgPopulated": false,
+      "regularMarketChangePercent": 0.25401974,
+      "regularMarketPrice": 11.84,
+      "marketState": "POSTPOST",
+      "currency": "CAD",
+      "priceHint": 2,
+      "regularMarketChange": 0.029999733,
+      "regularMarketDayHigh": 11.89,
+      "regularMarketDayRange": {
+        "low": 11.77,
+        "high": 11.89
+      },
+      "regularMarketDayLow": 11.77,
+      "regularMarketVolume": 290159,
+      "regularMarketPreviousClose": 11.81,
+      "bid": 11.83,
+      "ask": 11.84,
+      "bidSize": 0,
+      "askSize": 0,
+      "fullExchangeName": "Toronto",
+      "regularMarketOpen": 11.82,
+      "averageDailyVolume3Month": 305306,
+      "averageDailyVolume10Day": 348100,
+      "fiftyTwoWeekLowChange": 1.1500006,
+      "fiftyTwoWeekLowChangePercent": 0.107577235,
+      "fiftyTwoWeekRange": {
+        "low": 10.69,
+        "high": 12.32
+      },
+      "fiftyTwoWeekHighChange": -0.47999954,
+      "fiftyTwoWeekHighChangePercent": -0.038961004,
+      "fiftyTwoWeekLow": 10.69,
+      "fiftyTwoWeekHigh": 12.32,
+      "fiftyTwoWeekChangePercent": 7.559204,
+      "trailingAnnualDividendRate": 0,
+      "trailingAnnualDividendYield": 0,
+      "dividendYield": 6.91,
+      "ytdReturn": 11.7665,
+      "trailingThreeMonthReturns": 11.7665,
+      "trailingThreeMonthNavReturns": 11.7665,
+      "netAssets": 2148851710,
+      "fiftyDayAverage": 11.9944,
+      "fiftyDayAverageChange": -0.15439987,
+      "fiftyDayAverageChangePercent": -0.012872663,
+      "twoHundredDayAverage": 11.4431,
+      "twoHundredDayAverageChange": 0.39690018,
+      "twoHundredDayAverageChangePercent": 0.034684673,
+      "netExpenseRatio": 0.65,
+      "sourceInterval": 15,
+      "exchangeDataDelayedBy": 15,
+      "tradeable": false,
+      "cryptoTradeable": false,
+      "hasPrePostMarketData": false,
+      "firstTradeDateMilliseconds": "2012-01-24T14:30:00.000Z",
+      "corporateActions": [],
+      "regularMarketTime": "2026-04-16T19:59:59.000Z",
+      "shortName": "BMO COVERED CALL UTILITIES ETF",
+      "longName": "BMO Covered Call Utilities ETF",
+      "symbol": "ZWU.TO"
+    },
+    "timestamp": 1776384567364
+  },
+  "MSFT_quote_2021-04-01": {
+    "data": {
+      "language": "en-US",
+      "region": "US",
+      "quoteType": "EQUITY",
+      "typeDisp": "Equity",
+      "quoteSourceName": "Nasdaq Real Time Price",
+      "triggerable": true,
+      "customPriceAlertConfidence": "HIGH",
+      "currency": "USD",
+      "regularMarketChangePercent": 2.19834,
+      "regularMarketPrice": 420.26,
+      "priceEpsCurrentYear": 25.141514,
+      "sharesOutstanding": 7425629076,
+      "bookValue": 52.615,
+      "fiftyDayAverage": 391.9146,
+      "fiftyDayAverageChange": 28.345398,
+      "fiftyDayAverageChangePercent": 0.072325446,
+      "twoHundredDayAverage": 472.6885,
+      "twoHundredDayAverageChange": -52.428497,
+      "twoHundredDayAverageChangePercent": -0.110915534,
+      "marketCap": 3123531218944,
+      "forwardPE": 22.231121,
+      "priceToBook": 7.987456,
+      "sourceInterval": 15,
+      "exchangeDataDelayedBy": 0,
+      "averageAnalystRating": "1.3 - Strong Buy",
+      "tradeable": false,
+      "cryptoTradeable": false,
+      "hasPrePostMarketData": true,
+      "firstTradeDateMilliseconds": "1986-03-13T14:30:00.000Z",
+      "priceHint": 2,
+      "exchange": "NMS",
+      "messageBoardId": "finmb_21835",
+      "exchangeTimezoneName": "America/New_York",
+      "exchangeTimezoneShortName": "EDT",
+      "gmtOffSetMilliseconds": -14400000,
+      "market": "us_market",
+      "esgPopulated": false,
+      "postMarketChangePercent": 0.15942104,
+      "postMarketPrice": 420.93,
+      "postMarketChange": 0.6699829,
+      "regularMarketChange": 9.04001,
+      "regularMarketDayHigh": 420.82,
+      "regularMarketDayRange": {
+        "low": 412.14,
+        "high": 420.82
+      },
+      "regularMarketDayLow": 412.14,
+      "regularMarketVolume": 41060589,
+      "regularMarketPreviousClose": 411.22,
+      "bid": 419.92,
+      "ask": 420.37,
+      "bidSize": 2,
+      "askSize": 2,
+      "fullExchangeName": "NasdaqGS",
+      "financialCurrency": "USD",
+      "regularMarketOpen": 419.99,
+      "averageDailyVolume3Month": 37609490,
+      "averageDailyVolume10Day": 30076100,
+      "fiftyTwoWeekLowChange": 64.59,
+      "fiftyTwoWeekLowChangePercent": 0.1816009,
+      "fiftyTwoWeekRange": {
+        "low": 355.67,
+        "high": 555.45
+      },
+      "fiftyTwoWeekHighChange": -135.19,
+      "fiftyTwoWeekHighChangePercent": -0.24338824,
+      "fiftyTwoWeekLow": 355.67,
+      "fiftyTwoWeekHigh": 555.45,
+      "fiftyTwoWeekChangePercent": 11.811411,
+      "dividendDate": "2026-06-11T00:00:00.000Z",
+      "earningsTimestamp": "2026-04-29T20:00:00.000Z",
+      "earningsTimestampStart": "2026-04-29T20:00:00.000Z",
+      "earningsTimestampEnd": "2026-04-29T20:00:00.000Z",
+      "earningsCallTimestampStart": "2026-04-29T21:30:00.000Z",
+      "earningsCallTimestampEnd": "2026-04-29T21:30:00.000Z",
+      "isEarningsDateEstimate": false,
+      "trailingAnnualDividendRate": 3.48,
+      "trailingPE": 26.26625,
+      "dividendRate": 3.64,
+      "trailingAnnualDividendYield": 0.008462624,
+      "dividendYield": 0.89,
+      "epsTrailingTwelveMonths": 16,
+      "epsForward": 18.90413,
+      "epsCurrentYear": 16.71578,
+      "shortName": "Microsoft Corporation",
+      "longName": "Microsoft Corporation",
+      "corporateActions": [],
+      "postMarketTime": "2026-04-16T23:59:58.000Z",
+      "regularMarketTime": "2026-04-16T20:00:01.000Z",
+      "marketState": "POSTPOST",
+      "displayName": "Microsoft",
+      "symbol": "MSFT"
+    },
+    "timestamp": 1776386250486
+  }
+}

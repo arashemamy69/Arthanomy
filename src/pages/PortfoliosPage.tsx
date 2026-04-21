@@ -1,9 +1,89 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { PieChart, Briefcase, TrendingUp, Shield, ArrowRight, Coins, Scale } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { AreaChart, Area, ResponsiveContainer } from 'recharts';
+
+function MiniPortfolioChart({ holdings }: { holdings: any[] }) {
+  const [data, setData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/portfolio/simulate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ holdings, periodYears: 5, drip: true, initialAmount: 100000 })
+    })
+      .then(res => res.json())
+      .then(resData => {
+        if (resData.chartData) {
+          setData(resData.chartData);
+        }
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, [holdings]);
+
+  if (loading) {
+    return <div className="h-full w-full flex items-center justify-center text-sm text-gray-500">Loading simulation...</div>;
+  }
+
+  if (data.length === 0) {
+    return <div className="h-full w-full flex items-center justify-center text-sm text-gray-500">No data available</div>;
+  }
+
+  return (
+    <ResponsiveContainer width="100%" height="100%">
+      <AreaChart data={data} margin={{ top: 5, right: 0, left: 0, bottom: 0 }}>
+        <defs>
+          <linearGradient id="colorMini" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#2563eb" stopOpacity={0.3} />
+            <stop offset="95%" stopColor="#2563eb" stopOpacity={0} />
+          </linearGradient>
+        </defs>
+        <Area 
+          type="monotone" 
+          dataKey="totalValue" 
+          stroke="#2563eb" 
+          strokeWidth={2}
+          fillOpacity={1} 
+          fill="url(#colorMini)" 
+        />
+      </AreaChart>
+    </ResponsiveContainer>
+  );
+}
 
 const PORTFOLIOS = [
+  {
+    id: 'balanced-portfolio',
+    name: 'Balanced Portfolio',
+    description: 'A balanced approach to growth and income, featuring a mix of top US tech giants and high-yield Canadian ETFs.',
+    allocation: [
+      { asset: 'US Tech Equities', percentage: 40, color: 'bg-blue-600' },
+      { asset: 'Canadian High Yield ETFs', percentage: 60, color: 'bg-teal-500' }
+    ],
+    holdings: [
+      { ticker: "AAPL", weight: 7 },
+      { ticker: "AMZN", weight: 7 },
+      { ticker: "GOOG", weight: 7 },
+      { ticker: "META", weight: 7 },
+      { ticker: "MSFT", weight: 7 },
+      { ticker: "NVDA", weight: 5 },
+      { ticker: "V", weight: 2 },
+      { ticker: "MA", weight: 2 },
+      { ticker: "COST", weight: 2 },
+      { ticker: "WMT", weight: 2 },
+      { ticker: "JNJ", weight: 2 },
+      { ticker: "HYLD.TO", weight: 15 },
+      { ticker: "HDIV.TO", weight: 10 },
+      { ticker: "HMAX.TO", weight: 10 },
+      { ticker: "ZWC.TO", weight: 10 },
+      { ticker: "ZWU.TO", weight: 5 }
+    ],
+    risk: 'Moderate-High',
+    icon: <Scale className="w-6 h-6" />
+  },
   {
     id: 'classic',
     name: 'Classic Portfolio',
@@ -39,17 +119,6 @@ const PORTFOLIOS = [
     ],
     risk: 'Low-Moderate',
     icon: <Coins className="w-6 h-6" />
-  },
-  {
-    id: 'balanced',
-    name: 'Balanced Portfolio',
-    description: 'An optimal 60/40 split providing a smooth ride through market volatility while capturing growth. The gold standard for risk-adjusted returns.',
-    allocation: [
-      { asset: 'Equities', percentage: 60, color: 'bg-blue-500' },
-      { asset: 'Fixed Income', percentage: 40, color: 'bg-gray-400' }
-    ],
-    risk: 'Moderate',
-    icon: <Scale className="w-6 h-6" />
   }
 ];
 
@@ -89,26 +158,35 @@ export default function PortfoliosPage() {
                 <span className="text-gray-900 bg-gray-100 px-3 py-1 rounded-full">{portfolio.risk}</span>
               </div>
               
-              <button className="w-full md:w-auto py-3 px-6 bg-gray-50 hover:bg-gray-100 text-gray-900 rounded-xl font-medium transition-colors flex items-center justify-center gap-2">
+              <Link to={`/portfolios/${portfolio.id}`} className="inline-flex w-full md:w-auto py-3 px-6 bg-gray-50 hover:bg-gray-100 text-gray-900 rounded-xl font-medium transition-colors items-center justify-center gap-2">
                 View Details <ArrowRight className="w-4 h-4" />
-              </button>
+              </Link>
             </div>
             
-            <div className="flex-1 bg-gray-50/50 rounded-2xl p-6 border border-gray-100">
-              <h4 className="font-bold mb-4 text-sm text-gray-500 uppercase tracking-wider">Target Allocation</h4>
-              <div className="space-y-4">
-                {portfolio.allocation.map((item) => (
-                  <div key={item.asset}>
-                    <div className="flex justify-between text-sm mb-2">
-                      <span className="font-medium text-gray-700">{item.asset}</span>
-                      <span className="font-bold">{item.percentage}%</span>
+            <div className="flex-1 bg-gray-50/50 rounded-2xl p-6 border border-gray-100 flex flex-col">
+              <h4 className="font-bold mb-4 text-sm text-gray-500 uppercase tracking-wider">
+                {portfolio.holdings ? '5-Year Growth (Simulated)' : 'Target Allocation'}
+              </h4>
+              {portfolio.holdings ? (
+                <Link to={`/portfolios/${portfolio.id}`} className="flex-1 min-h-[200px] block relative group cursor-pointer">
+                  <div className="absolute inset-0 z-10 transition-colors group-hover:bg-white/10 rounded-2xl" />
+                  <MiniPortfolioChart holdings={portfolio.holdings} />
+                </Link>
+              ) : (
+                <div className="space-y-4">
+                  {portfolio.allocation.map((item) => (
+                    <div key={item.asset}>
+                      <div className="flex justify-between text-sm mb-2">
+                        <span className="font-medium text-gray-700">{item.asset}</span>
+                        <span className="font-bold">{item.percentage}%</span>
+                      </div>
+                      <div className="h-2.5 w-full bg-gray-200 rounded-full overflow-hidden">
+                        <div className={`h-full ${item.color}`} style={{ width: `${item.percentage}%` }} />
+                      </div>
                     </div>
-                    <div className="h-2.5 w-full bg-gray-200 rounded-full overflow-hidden">
-                      <div className={`h-full ${item.color}`} style={{ width: `${item.percentage}%` }} />
-                    </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           </motion.div>
         ))}

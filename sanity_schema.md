@@ -6,39 +6,62 @@ This document explains the structure of the Sanity CMS schema used in the Arthan
 
 The Sanity Studio is located in the `/studio` directory. It is treated as a separate project from the main React website. The website fetches data from Sanity's API using the `@sanity/client` package.
 
-We currently have two main document types defined in our schema:
-1.  **Article** (`/studio/schemaTypes/article.ts`)
-2.  **Page** (`/studio/schemaTypes/page.ts`)
+We currently have several document types defined in our schema:
+1.  **Article** (`article`)
+2.  **Page** (`page`)
+3.  **Series** (`series`)
+4.  **Author** (`author`)
+5.  **Portfolio** (`portfolio`)
+6.  **Topic** (`topic`)
+7.  **Tag** (`tag`)
 
 ---
 
-## 1. Article Schema (`article.ts`)
+## 1. Portfolio Schema (`portfolio.ts`)
+
+**Purpose:** 
+Manages the model portfolios displayed on the `/portfolios` page and their detailed simulation pages.
+
+**Fields:**
+*   **`title` (String):** The name of the portfolio (e.g., "Balanced Portfolio").
+*   **`slug` (Slug):** The URL identifier (e.g., `balanced-portfolio`).
+*   **`description` (Text):** A detailed description of the portfolio's strategy.
+*   **`type` (Reference to `portfolioType` or String):** Categorizes the portfolio (e.g., Growth, Balanced, Income). *Note: This can be implemented as a simple string dropdown or a reference to a dedicated `portfolioType` document to allow dynamic creation of new types, similar to tags.*
+*   **`holdings` (Array of Objects):** The actual assets in the portfolio.
+    *   **`ticker` (String):** The stock or ETF symbol. **Must use `.TO` for Canadian TSX tickers** (e.g., `XIC.TO`, `HYLD.TO`) so the `yahoo-finance2` backend can fetch the data.
+    *   **`weight` (Number):** The percentage allocation (e.g., 15). The total weights should sum to 100.
+
+---
+
+## 2. Article Schema (`article.ts`)
 
 **Purpose:** 
 This schema is designed for evergreen educational content, deep dives, and strategy guides. It is meant to feel like a clean, distraction-free publishing platform (similar to Substack).
 
 **Fields:**
 *   **`title` (String):** The main headline of the article.
-*   **`slug` (Slug):** The URL-friendly version of the title (e.g., `my-first-article`). Used by the frontend to generate the route `/post/my-first-article`.
-*   **`topic` (String/Dropdown):** Categorizes the article. We use a predefined list (Education, Market Update, Mindset, Portfolio Strategy) to maintain consistency and allow for future filtering on the frontend.
-*   **`readTime` (String):** A manual override for read time (e.g., "5 min read"). *Note: The frontend currently calculates this automatically based on word count, but this field allows editors to override it if needed.*
-*   **`mainImage` (Image):** The hero image for the article. It supports "hotspot" cropping, allowing editors to choose the focal point of the image so it looks good on both mobile and desktop.
-*   **`publishedAt` (Datetime):** The date the article was published. Used for sorting articles chronologically on the frontend.
-*   **`body` (Portable Text / Array):** The rich-text editor. 
-    *   *Logic:* Instead of saving raw HTML or Markdown, Sanity saves rich text as an array of blocks (Portable Text). This is highly secure and allows the React frontend to render the text exactly how we want using our own Tailwind CSS classes (via `@portabletext/react`). We restricted the formatting options (H2, H3, Quotes, Bullets, Bold, Italic) to ensure the design remains clean and consistent.
+*   **`slug` (Slug):** The URL-friendly version of the title. Used by the frontend to generate the route `/articles/:slug`.
+*   **`topic` (Reference):** Categorizes the article into a main topic (e.g., Education, Stocks and ETFs).
+*   **`tags` (Array of References):** Allows for granular tagging.
+*   **`author` (Reference):** Links to an `author` document to display the author's bio and photo.
+*   **`series` (Reference):** Links to a `series` document if the article is part of a multi-part guide.
+*   **`partNumber` (Number):** The order of the article within a series.
+*   **`mainImage` (Image):** The hero image for the article.
+*   **`publishedAt` (Datetime):** The date the article was published.
+*   **`body` (Portable Text / Array):** The rich-text editor. Includes custom block types like `pullStat`, `table`, and `arthTable` (editorial tables).
 
 ---
 
-## 2. Page Schema (`page.ts`)
+## 3. Page Schema (`page.ts`)
 
 **Purpose:**
-This schema is designed for "Singleton" or static pages like About, Privacy Policy, and Disclaimer. Instead of hardcoding text into the React components, this allows non-technical users to update legal text or company info directly from the CMS.
+This schema is designed for "Singleton" or static pages like About, Privacy Policy, and Disclaimer.
 
 **Fields:**
-*   **`title` (String):** The name of the page (e.g., "About Arthanomy").
-*   **`slug` (Slug):** The URL identifier. For these pages, the slug must exactly match what the frontend expects (e.g., `about`, `privacy`, `disclaimer`).
-*   **`subtitle` (String):** A short tagline that appears below the main heading.
-*   **`body` (Portable Text / Array):** The main content of the page, using the same clean rich-text editor as the Article schema.
+*   **`title` (String):** The name of the page.
+*   **`slug` (Slug):** The URL identifier (e.g., `about`, `privacy`, `disclaimer`).
+*   **`subtitle` (String):** A short tagline.
+*   **`body` (Portable Text / Array):** The main content of the page.
 
 ---
 
@@ -46,9 +69,9 @@ This schema is designed for "Singleton" or static pages like About, Privacy Poli
 
 The logic bridging the CMS and the website lives in `src/lib/sanity.ts`.
 
-1.  **GROQ Queries:** We use Sanity's query language (GROQ) to fetch data. For example, to get a specific page, we query: `*[_type == "page" && slug.current == $slug][0]`.
-2.  **TypeScript Interfaces:** We define interfaces (e.g., `SanityArticle`, `SanityPage`) in `sanity.ts` that exactly match the shape of the data returned by Sanity. This ensures our React components know exactly what fields are available.
-3.  **Rendering:** In components like `ArticlePage.tsx` or `AboutPage.tsx`, we use the `<PortableText value={data.body} />` component to safely convert Sanity's block content into beautifully styled HTML elements.
+1.  **GROQ Queries:** We use Sanity's query language (GROQ) to fetch data. For example, to get a specific portfolio, we query: `*[_type == "portfolio" && slug.current == $slug][0]`.
+2.  **TypeScript Interfaces:** We define interfaces (e.g., `SanityPortfolio`, `SanityArticle`) in `sanity.ts` that exactly match the shape of the data returned by Sanity. This ensures our React components know exactly what fields are available.
+3.  **Rendering:** In components like `ArticlePage.tsx`, we use the `<PortableText value={data.body} components={portableTextComponents} />` component to safely convert Sanity's block content into beautifully styled HTML elements using our custom renderers.
 
 ## Modifying the Schema (Reconciliation Process)
 
@@ -59,8 +82,8 @@ Because the Studio and the Website are decoupled, modifying the schema requires 
 1.  **Update the Studio:** You write the code in `/studio/schemaTypes/...`, test it locally, and run `npx sanity deploy` to push the changes to the live CMS.
 2.  **Communicate with the AI:** Tell the AI Assistant: *"I added a new string field called `authorBio` to the `article` schema."*
 3.  **Update the Frontend:** The AI will then:
-    *   Update the GROQ queries in `src/lib/sanity.ts` to fetch the new `authorBio` field.
-    *   Update the TypeScript interface (`SanityArticle`) to include `authorBio: string`.
-    *   Update the React component (e.g., `ArticlePage.tsx`) to actually render the new data on the screen.
+    *   Update the GROQ queries in `src/lib/sanity.ts` to fetch the new field.
+    *   Update the TypeScript interface to include the new property.
+    *   Update the React component to actually render the new data on the screen.
 
 This process ensures that the database structure and the frontend UI remain perfectly in sync without breaking the application logic.

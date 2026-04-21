@@ -94,6 +94,17 @@ export interface SanitySeries {
   }>;
 }
 
+export interface SanityPortfolio {
+  title: string;
+  slug: { current: string };
+  description?: string;
+  type?: string;
+  holdings: Array<{
+    ticker: string;
+    weight: number;
+  }>;
+}
+
 // Helper fetch functions
 export async function getPageBySlug(slug: string): Promise<SanityPage | null> {
   try {
@@ -310,6 +321,52 @@ export async function getSeriesBySlug(slug: string): Promise<SanitySeries | null
     return series;
   } catch (error) {
     console.error("Error fetching series from Sanity:", error);
+    return null;
+  }
+}
+
+export async function getPortfolioBySlug(slug: string): Promise<SanityPortfolio | null> {
+  try {
+    // Fallback for the Balanced Portfolio if it doesn't exist in Sanity yet
+    if (slug === 'balanced-portfolio') {
+      return {
+        title: "Balanced Portfolio",
+        slug: { current: "balanced-portfolio" },
+        description: "A balanced approach to growth and income, featuring a mix of top US tech giants and high-yield Canadian ETFs.",
+        type: "Balanced",
+        holdings: [
+          { ticker: "AAPL", weight: 7 },
+          { ticker: "AMZN", weight: 7 },
+          { ticker: "GOOG", weight: 7 },
+          { ticker: "META", weight: 7 },
+          { ticker: "MSFT", weight: 7 },
+          { ticker: "NVDA", weight: 5 },
+          { ticker: "V", weight: 2 },
+          { ticker: "MA", weight: 2 },
+          { ticker: "COST", weight: 2 },
+          { ticker: "WMT", weight: 2 },
+          { ticker: "JNJ", weight: 2 },
+          { ticker: "HYLD.TO", weight: 15 },
+          { ticker: "HDIV.TO", weight: 10 },
+          { ticker: "HMAX.TO", weight: 10 },
+          { ticker: "ZWC.TO", weight: 10 },
+          { ticker: "ZWU.TO", weight: 5 }
+        ]
+      };
+    }
+
+    const query = `*[_type == "portfolio" && slug.current == $slug][0] {
+      title,
+      slug,
+      description,
+      type,
+      holdings
+    }`;
+    
+    const portfolio = await sanityClient.fetch(query, { slug });
+    return portfolio;
+  } catch (error) {
+    console.error("Error fetching portfolio from Sanity:", error);
     return null;
   }
 }

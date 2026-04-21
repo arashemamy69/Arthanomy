@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage';
 import ArticlePage from './pages/ArticlePage';
 import PostPage from './pages/PostPage';
 import PortfoliosPage from './pages/PortfoliosPage';
+import PortfolioDetailPage from './pages/PortfolioDetailPage';
 import LearningPage from './pages/LearningPage';
 import SeriesPage from './pages/SeriesPage';
 import ArticlesPage from './pages/ArticlesPage';
@@ -28,6 +29,7 @@ export default function App() {
             <Route path="topic/:slug" element={<TopicPage />} />
             <Route path="tag/:slug" element={<TagPage />} />
             <Route path="portfolios" element={<PortfoliosPage />} />
+            <Route path="portfolios/:slug" element={<PortfolioDetailPage />} />
             <Route path="about" element={<AboutPage />} />
             <Route path="privacy" element={<PrivacyPage />} />
             <Route path="disclaimer" element={<DisclaimerPage />} />
